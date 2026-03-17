@@ -1,0 +1,32 @@
+---
+// src/pages/admin/[type]/index.astro
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+import { ContentTable } from "@/components/ContentTable";
+import { supabase } from "@/lib/supabase"; // Import Supabase
+import type { ContentType } from "@/lib/types";
+
+// AKTIFKAN SSR (Biar nggak statis)
+export const prerender = false;
+
+const { type } = Astro.params;
+const contentType = type as ContentType;
+const tableName = contentType === 'blog' ? "blogs" : "portofolios";
+const label = contentType === 'blog' ? 'Blog' : 'Portofolio';
+
+// AMBIL DATA LIVE DARI SUPABASE
+const { data, error } = await supabase
+  .from(tableName)
+  .select("*")
+  .order("created_at", { ascending: false });
+
+if (error) console.error("Gagal ambil data:", error);
+
+const initialData = data || [];
+---
+
+<AdminLayout title={`Manage ${label}`}>
+  <div class="w-full">
+    {/* initialData sekarang isi dari database, bukan dari file .ts lagi */}
+    <ContentTable client:load type={contentType} initialData={initialData} />
+  </div>
+</AdminLayout>

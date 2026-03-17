@@ -1,0 +1,55 @@
+---
+// src/layouts/AdminLayout.astro
+import AdminPanel from "@/components/AdminPanel";
+import { Toaster } from "@/components/ui/sonner";
+import { supabase } from "@/lib/supabase"; // Import Supabase
+import "@/styles/global.css";
+
+const { title } = Astro.props;
+const pathname = Astro.url.pathname;
+
+// AMBIL DATA USER DARI MIDDLEWARE
+const { user } = Astro.locals;
+
+// AMBIL DATA RECENT SECARA LIVE
+const { data: recentBlogs } = await supabase
+  .from("blogs")
+  .select("title, slug")
+  .order("created_at", { ascending: false })
+  .limit(5);
+
+const { data: recentPortos } = await supabase
+  .from("portofolios")
+  .select("title, slug")
+  .order("created_at", { ascending: false })
+  .limit(5);
+
+const userData = {
+  id: user?.id || "", 
+  name: user?.user_metadata?.full_name || user?.email?.split('@')[0] || "Admin",
+  email: user?.email || "unknown@widigda.com",
+  avatar: user?.user_metadata?.avatar_url || "", 
+};
+---
+
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | Manage Portfolio</title>
+  </head>
+  <body>
+    <Toaster client:load richColors position="top-center" theme="light" />
+
+    {/* Kirim userData DAN data recent ke AdminPanel */}
+    <AdminPanel 
+      client:load 
+      pathname={pathname} 
+      user={userData}
+      recentBlogs={recentBlogs || []}
+      recentPortos={recentPortos || []}
+    >
+      <slot />
+    </AdminPanel>
+  </body>
+</html>

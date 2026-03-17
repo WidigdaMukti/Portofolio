@@ -1,0 +1,47 @@
+---
+// src/pages/admin/index.astro
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import { DashboardOverview } from "@/components/DashboardOverview";
+import { supabase } from "@/lib/supabase";
+
+export const prerender = false;
+
+// 1. Ambil data Blogs & Portos
+const { data: blogs } = await supabase.from('blogs').select('likes, shares, created_at');
+const { data: portos } = await supabase.from('portofolios').select('likes, shares, created_at');
+
+// 2. Kalkulasi Likes per kategori
+const blogLikes = blogs?.reduce((acc, curr) => acc + (Number(curr.likes) || 0), 0) || 0;
+const portoLikes = portos?.reduce((acc, curr) => acc + (Number(curr.likes) || 0), 0) || 0;
+
+// 3. Kalkulasi Shares per kategori
+const blogShares = blogs?.reduce((acc, curr) => acc + (Number(curr.shares) || 0), 0) || 0;
+const portoShares = portos?.reduce((acc, curr) => acc + (Number(curr.shares) || 0), 0) || 0;
+
+// 4. Kalkulasi Growth (30 hari terakhir)
+const thirtyDaysAgo = new Date();
+thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+const blogGrowth = blogs?.filter(b => new Date(b.created_at) > thirtyDaysAgo).length || 0;
+const portoGrowth = portos?.filter(p => new Date(p.created_at) > thirtyDaysAgo).length || 0;
+
+const statsData = {
+    blog: { 
+        total: blogs?.length || 0, 
+        growth: blogGrowth,
+        likes: blogLikes,
+        shares: blogShares
+    },
+    porto: { 
+        total: portos?.length || 0, 
+        growth: portoGrowth,
+        likes: portoLikes,
+        shares: portoShares
+    },
+    totalLikes: blogLikes + portoLikes,
+    totalShares: blogShares + portoShares
+};
+---
+
+<AdminLayout title="Dashboard Overview">
+    <DashboardOverview client:load stats={statsData} />
+</AdminLayout>

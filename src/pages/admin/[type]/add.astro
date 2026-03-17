@@ -1,0 +1,18 @@
+---
+// src/pages/admin/[type]/add.astro
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+import { ContentForm } from "@/components/ContentForm";
+import type { ContentType } from "@/lib/types";
+
+export const prerender = false;
+
+const { type } = Astro.params;
+const contentType = type as ContentType;
+const label = contentType === 'blog' ? 'Artikel' : 'Proyek';
+---
+
+<AdminLayout title={`Tambah ${label} Baru`}>
+  <div class="w-full">
+    <ContentForm client:load type={contentType} mode="add" />
+  </div>
+</AdminLayout>

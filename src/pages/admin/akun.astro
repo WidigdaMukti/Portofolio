@@ -1,0 +1,18 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import { AccountForm } from "@/components/AccountForm";
+
+const { user } = Astro.locals;
+
+// Data bersih dari Supabase
+const userData = {
+  id: user?.id || "",
+  name: user?.user_metadata?.full_name || user?.email?.split('@')[0] || "Admin",
+  email: user?.email || "",
+  avatar: user?.user_metadata?.avatar_url || "",
+};
+---
+
+<AdminLayout title="Pengaturan Akun">
+  <AccountForm user={userData} client:load />
+</AdminLayout>

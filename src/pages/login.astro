@@ -1,0 +1,20 @@
+---
+import { LoginForm } from "@/components/login-form";
+import "@/styles/global.css";
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Login - Widigda Porto</title>
+	</head>
+	<body>
+		<div class="flex min-h-svh w-full items-center justify-center p-6 md:p-10 bg-muted/40">
+			<div class="w-full max-w-sm">
+				<LoginForm client:load />
+			</div>
+		</div>
+	</body>
+</html>

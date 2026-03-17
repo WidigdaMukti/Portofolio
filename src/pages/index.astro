@@ -1,11 +1,11 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import MainLayout from "../layouts/MainLayout.astro";
+import { Button } from "@/components/ui/button";
 ---
-
-<Layout>
-	<Welcome />
-</Layout>
+<MainLayout title="Welcome to My Portfolio">
+  <h1 class="text-4xl font-bold mb-4">Halo, ini halaman Public!</h1>
+  <p class="mb-6">Rencana untuk naruh porto dan blog di sini.</p>
+  <a href="/admin">
+    <Button variant="outline">Coba Masuk ke Admin</Button>
+  </a>
+</MainLayout>

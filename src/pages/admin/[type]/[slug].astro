@@ -1,0 +1,36 @@
+---
+// src/pages/admin/[type]/[slug].astro
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+import { ContentForm } from "@/components/ContentForm";
+import { supabase } from "@/lib/supabase";
+import type { ContentType } from "@/lib/types";
+
+export const prerender = false;
+
+const { type, slug } = Astro.params;
+const contentType = type as ContentType;
+const tableName = contentType === 'blog' ? "blogs" : "portofolios";
+
+// CARI DATA BERDASARKAN SLUG
+const { data: post, error } = await supabase
+  .from(tableName)
+  .select("*")
+  .eq("slug", slug)
+  .single();
+
+// Jika data tidak ketemu, tendang balik ke halaman list
+if (error || !post) {
+  return Astro.redirect(`/admin/${type}`);
+}
+---
+
+<AdminLayout title={`Edit ${type} - ${post.title}`}>
+  <div class="w-full">
+    <ContentForm 
+      client:load 
+      type={contentType} 
+      mode="edit" 
+      initialData={post} 
+    />
+  </div>
+</AdminLayout>
