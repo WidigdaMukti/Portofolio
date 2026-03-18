@@ -2,23 +2,33 @@
 // src/pages/admin/index.astro
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import { DashboardOverview } from "@/components/DashboardOverview";
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
 export const prerender = false;
 
-// 1. Ambil data Blogs & Portos
-const { data: blogs } = await supabase.from('blogs').select('likes, shares, created_at');
-const { data: portos } = await supabase.from('portofolios').select('likes, shares, created_at');
+// 1. AMBIL RANGE DARI URL (DEFAULT 7d)
+const rangeParam = (Astro.url.searchParams.get('range') as "3m" | "30d" | "7d") || '7d';
+const days = rangeParam === '3m' ? 90 : rangeParam === '30d' ? 30 : 7;
 
-// 2. Kalkulasi Likes per kategori
+// 2. AMBIL DATA GRAFIK DARI RPC
+// Pastikan nama fungsi di Supabase lo adalah 'get_visitor_stats'
+const { data: chartData, error: chartError } = await supabaseAdmin.rpc('get_visitor_stats', { 
+    days_limit: days 
+});
+
+if (chartError) console.error("Error fetching chart data:", chartError.message);
+
+// 3. AMBIL DATA BLOGS & PORTOS UNTUK STATS
+const { data: blogs } = await supabaseAdmin.from('blogs').select('likes, shares, created_at');
+const { data: portos } = await supabaseAdmin.from('portofolios').select('likes, shares, created_at');
+
+// 4. KALKULASI STATS
 const blogLikes = blogs?.reduce((acc, curr) => acc + (Number(curr.likes) || 0), 0) || 0;
 const portoLikes = portos?.reduce((acc, curr) => acc + (Number(curr.likes) || 0), 0) || 0;
 
-// 3. Kalkulasi Shares per kategori
 const blogShares = blogs?.reduce((acc, curr) => acc + (Number(curr.shares) || 0), 0) || 0;
 const portoShares = portos?.reduce((acc, curr) => acc + (Number(curr.shares) || 0), 0) || 0;
 
-// 4. Kalkulasi Growth (30 hari terakhir)
 const thirtyDaysAgo = new Date();
 thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 const blogGrowth = blogs?.filter(b => new Date(b.created_at) > thirtyDaysAgo).length || 0;
@@ -43,5 +53,10 @@ const statsData = {
 ---
 
 <AdminLayout title="Dashboard Overview">
-    <DashboardOverview client:load stats={statsData} />
+    <DashboardOverview 
+        client:load 
+        stats={statsData} 
+        chartData={chartData || []} 
+        currentRange={rangeParam}
+    />
 </AdminLayout>

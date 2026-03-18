@@ -1,14 +1,73 @@
 ---
+// src/layouts/MainLayout.astro
 import "@/styles/global.css";
-const { title } = Astro.props;
+import { supabase } from "@/lib/supabase";
+import PublicPanel from "@/components/PublicPanel";
+
+const { title, postId = null } = Astro.props; 
+const pathname = Astro.url.pathname;
+
+// --- 1. HANDLE SESSION ID (LOGIC COOKIE) ---
+let sessionId = Astro.cookies.get('sb_session_id')?.value;
+
+if (!sessionId) {
+    // Kalau gak ada session, buat UUID baru
+    sessionId = crypto.randomUUID();
+    
+    // Simpan di cookie browser
+    Astro.cookies.set('sb_session_id', sessionId, {
+        path: '/',
+        httpOnly: true, // Aman dari script JS jahat (XSS)
+        secure: import.meta.env.PROD, // Hanya kirim lewat HTTPS kalau sudah production
+        sameSite: 'lax',
+    });
+}
+
+// --- 2. TRACKING LOGIC (SSR) ---
+if (!pathname.startsWith('/admin')) {
+    try {
+        const userAgent = Astro.request.headers.get('user-agent') || '';
+        const ipAddress = Astro.request.headers.get('x-forwarded-for')?.split(',')[0] || '127.0.0.1';
+        
+        // Helper buat tebak browser & os simpel
+        const getBrowser = (ua: string) => {
+            if (ua.includes('Chrome')) return 'Chrome';
+            if (ua.includes('Safari')) return 'Safari';
+            if (ua.includes('Firefox')) return 'Firefox';
+            return 'Other';
+        };
+
+        const getOS = (ua: string) => {
+            if (ua.includes('Windows')) return 'Windows';
+            if (ua.includes('Mac')) return 'MacOS';
+            if (ua.includes('iPhone') || ua.includes('Android')) return 'Mobile';
+            return 'Other';
+        };
+
+        await supabase.from('analytics').insert([{
+            page_path: pathname,
+            session_id: sessionId, // SEKARANG SUDAH TERISI
+            user_agent: userAgent,
+            ip_address: ipAddress,
+            browser: getBrowser(userAgent),
+            os: getOS(userAgent),
+            post_id: postId
+        }]);
+    } catch (e) {
+        console.error("Analytics error", e);
+    }
+}
 ---
+
 <html lang="id">
-  <head><title>{title}</title></head>
-  <body class="bg-slate-950 text-white">
-    <nav class="p-4 border-b border-slate-800">
-      <a href="/" class="font-bold">My Porto</a>
-    </nav>
-    <main class="p-8">
-      <slot /> </main>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{title} | Widigda's Portfolio</title>
+    </head>
+    <body class="antialiased">
+        <PublicPanel client:load>
+            <slot />
+        </PublicPanel>
+    </body>
 </html>

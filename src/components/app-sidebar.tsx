@@ -6,6 +6,7 @@ import {
   LayoutDashboard,
   FolderKanban,
   MoreHorizontal,
+  Mail, // Icon untuk Inbox
 } from "lucide-react"
 
 import { NavUser } from "@/components/nav-user"
@@ -24,7 +25,6 @@ import {
   SidebarGroupLabel,
 } from "@/components/ui/sidebar"
 
-// TIPE DATA PROPS: Tambahkan recentBlogs dan recentPortos
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   user: {
     name: string;
@@ -33,16 +33,17 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   };
   recentBlogs: { title: string; slug: string }[];
   recentPortos: { title: string; slug: string }[];
+  unreadCount: number; // Prop baru untuk notifikasi inbox
 }
 
-export function AppSidebar({ user, recentBlogs, recentPortos, ...props }: AppSidebarProps) {
+export function AppSidebar({ user, recentBlogs, recentPortos, unreadCount, ...props }: AppSidebarProps) {
   const navigation = {
     main: [
       { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
       { title: "Blog", url: "/admin/blog", icon: BookOpen },
       { title: "Portofolio", url: "/admin/portofolio", icon: FolderKanban },
+      { title: "Inbox", url: "/admin/inbox", icon: Mail, badge: unreadCount },
     ],
-    // Pakai data dari Props
     latestBlog: recentBlogs.map((b) => ({ title: b.title, url: `/admin/blog/${b.slug}` })),
     latestPorto: recentPortos.map((p) => ({ title: p.title, url: `/admin/portofolio/${p.slug}` })),
   }
@@ -59,9 +60,17 @@ export function AppSidebar({ user, recentBlogs, recentPortos, ...props }: AppSid
             {navigation.main.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild tooltip={item.title}>
-                  <a href={item.url}>
-                    <item.icon />
-                    <span>{item.title}</span>
+                  <a href={item.url} className="flex items-center justify-between w-full">
+                    <div className="flex items-center gap-2">
+                      <item.icon className="size-4" />
+                      <span>{item.title}</span>
+                    </div>
+                    {/* CIRCLE NOTIFICATION BADGE */}
+                    {item.badge !== undefined && item.badge > 0 && (
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-500 text-[10px] font-bold text-primary-foreground animate-in zoom-in duration-300">
+                        {item.badge}
+                      </span>
+                    )}
                   </a>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -69,7 +78,7 @@ export function AppSidebar({ user, recentBlogs, recentPortos, ...props }: AppSid
           </SidebarMenu>
         </SidebarGroup>
 
-        {/* RECENT BLOGS */}
+        {/* RECENT POSTS */}
         <SidebarGroup>
           <SidebarGroupLabel>Recent Posts</SidebarGroupLabel>
           <SidebarMenu>

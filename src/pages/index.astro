@@ -1,11 +1,13 @@
 ---
+// src/pages/index.astro
 import MainLayout from "../layouts/MainLayout.astro";
-import { Button } from "@/components/ui/button";
+import { HeroSection } from "@/components/HeroSection";
 ---
-<MainLayout title="Welcome to My Portfolio">
-  <h1 class="text-4xl font-bold mb-4">Halo, ini halaman Public!</h1>
-  <p class="mb-6">Rencana untuk naruh porto dan blog di sini.</p>
-  <a href="/admin">
-    <Button variant="outline">Coba Masuk ke Admin</Button>
-  </a>
+
+<MainLayout title="Home">
+    {/* Konten spesifik halaman Home */}
+    <HeroSection />
+    
+    {/* Nanti tinggal nambah section lain di bawahnya */}
+    {/* <FeaturedProjects /> */}
 </MainLayout>

@@ -2,16 +2,21 @@
 // src/layouts/AdminLayout.astro
 import AdminPanel from "@/components/AdminPanel";
 import { Toaster } from "@/components/ui/sonner";
-import { supabase } from "@/lib/supabase"; // Import Supabase
+import { supabaseAdmin } from "@/lib/supabaseAdmin";
+import { supabase } from "@/lib/supabase";
 import "@/styles/global.css";
 
 const { title } = Astro.props;
 const pathname = Astro.url.pathname;
-
-// AMBIL DATA USER DARI MIDDLEWARE
 const { user } = Astro.locals;
 
-// AMBIL DATA RECENT SECARA LIVE
+// 1. HITUNG PESAN BARU (PAKAI ADMIN CLIENT AGAR TEMBUS RLS)
+const { count: unreadCount } = await supabaseAdmin
+  .from('inbox')
+  .select('*', { count: 'exact', head: true })
+  .eq('status', 'new');
+
+// 2. DATA LAIN (BISA PAKAI SUPABASE BIASA/ANON)
 const { data: recentBlogs } = await supabase
   .from("blogs")
   .select("title, slug")
@@ -36,16 +41,16 @@ const userData = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title} | Manage Portfolio</title>
+    <title>{title} | Content Management System</title>
   </head>
   <body>
     <Toaster client:load richColors position="top-center" theme="light" />
 
-    {/* Kirim userData DAN data recent ke AdminPanel */}
     <AdminPanel 
       client:load 
       pathname={pathname} 
       user={userData}
+      unreadCount={unreadCount || 0}
       recentBlogs={recentBlogs || []}
       recentPortos={recentPortos || []}
     >
