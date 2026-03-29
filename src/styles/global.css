@@ -127,3 +127,19 @@
     @apply font-sans;
     }
 }
+
+@layer utilities {
+  .technical-grid {
+    display: grid;
+    width: 100%;
+    /* Default Mobile */
+    grid-template-columns: 100px 1fr 100px;
+  }
+
+  /* Breakpoint MD (768px) sesuai standar v4 */
+  @media (width >= 48rem) {
+    .technical-grid {
+      grid-template-columns: 200px 1fr 200px;
+    }
+  }
+}
