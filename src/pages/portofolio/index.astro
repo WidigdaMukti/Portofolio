@@ -1,0 +1,11 @@
+---
+import "@/styles/global.css";
+import { PortfolioList } from '../../components/PortfolioList';
+import { Navbar } from "../../components/Navbar";
+import { FooterSection } from "../../components/FooterSection";
+---
+<Navbar client:load />
+<main>
+  <PortfolioList client:load />
+</main>
+<FooterSection client:load />

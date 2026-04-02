@@ -1,0 +1,143 @@
+"use client"
+
+import * as React from "react"
+import { IconArrowUpRight, IconMessage2 } from "@tabler/icons-react"
+import { Button } from "@/components/ui/button"
+
+export function ServicesSection() {
+  const tags = [
+    "SaaS Product", "Dashboard", "E-commerce", "Landing Page", 
+    "Fintech", "Mobile App", "Edutech", "CRM", "Healthcare Solution",
+    "SaaS Product", "Dashboard", "E-commerce", "Landing Page" // Duplicate buat looping seamless
+  ];
+
+  return (
+    <section id="services" className="w-full scroll-mt-16">
+      {/* --- HEADER --- */}
+      <div className="technical-grid border-b border-neutral-200">
+        <div className="border-r border-neutral-200" />
+        <div className="grid grid-cols-1 md:grid-cols-2 py-8 px-6 md:px-8 items-start">
+          <div className="flex flex-col gap-4">
+            <div className="inline-flex w-fit px-3 py-1 border border-neutral-200 rounded-full bg-white">
+                <span className="text-sm font-medium text-neutral-950 tracking-tight">Services</span>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tighter text-neutral-950 leading-tight">
+              Design services that <br /> make an impact. 🎨
+            </h2>
+          </div>
+          <div className="flex items-end md:pt-14">
+            <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
+              Whether you need a complete brand identity or a conversion-focused website, I create designs that deliver.
+            </p>
+          </div>
+        </div>
+        <div className="border-l border-neutral-200" />
+      </div>
+
+      {/* --- BENTO GRID --- */}
+      <div className="technical-grid">
+        <div className="border-r border-neutral-200" />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-8 px-6 md:px-8 bg-white">
+          
+          {/* KOLOM KIRI: Panjang - Pendek */}
+          <div className="flex flex-col gap-6">
+            {/* UI Design (Long Card) */}
+            <div className="bg-neutral-100/50 p-6 md:p-8 rounded-xl border border-neutral-200 group cursor-pointer flex flex-col gap-8 min-h-[480px]">
+              <div className="space-y-3">
+                <h3 className="text-xl font-semibold text-neutral-950 tracking-tight">UI Design & Visual Identity</h3>
+                <p className="text-sm text-neutral-500 leading-relaxed">
+                  I craft intuitive UIs and seamless UXs that solve real problems and deliver results with a user-centric approach.
+                </p>
+              </div>
+              <div className="mt-auto relative aspect-[4/3] bg-neutral-200 rounded-xl overflow-hidden border border-neutral-300/50 transition-transform duration-500 group-hover:rotate-2 group-hover:scale-[1.02]">
+                <div className="absolute inset-0 flex items-center justify-center">
+                   <div className="w-4/5 h-4/5 bg-neutral-300 rounded-lg shadow-sm rotate-3 translate-x-2" />
+                   <div className="absolute w-4/5 h-4/5 bg-neutral-400/20 rounded-lg -rotate-3 -translate-x-2 border border-neutral-300" />
+                </div>
+              </div>
+            </div>
+
+            {/* User Research (Short Card) */}
+            <div className="bg-white p-6 md:p-8 rounded-xl border border-neutral-200 group cursor-pointer hover:bg-neutral-50 transition-colors">
+              <h3 className="text-xl font-semibold text-neutral-950 tracking-tight mb-3">User Research & Strategy</h3>
+              <p className="text-sm text-neutral-500 leading-relaxed">
+                I craft intuitive UIs and seamless UXs that solve real problems and deliver results with a user-centric approach.
+              </p>
+            </div>
+          </div>
+
+          {/* KOLOM KANAN: Pendek - Panjang */}
+          <div className="flex flex-col gap-6">
+            {/* UX Design (Short Card) */}
+            <div className="bg-white p-6 md:p-8 rounded-xl border border-neutral-200 group cursor-pointer hover:bg-neutral-50 transition-colors">
+              <h3 className="text-xl font-semibold text-neutral-950 tracking-tight mb-3">UX Design & Wireframing</h3>
+              <p className="text-sm text-neutral-500 leading-relaxed">
+                I craft intuitive UIs and seamless UXs that solve real problems and deliver results with a user-centric approach.
+              </p>
+            </div>
+
+            {/* Interaction (Long Card) */}
+            <div className="bg-neutral-100/50 p-6 md:p-8 rounded-xl border border-neutral-200 group cursor-pointer flex flex-col gap-8 min-h-[480px]">
+              <div className="space-y-3">
+                <h3 className="text-xl font-semibold text-neutral-950 tracking-tight">Interaction & Prototyping</h3>
+                <p className="text-sm text-neutral-500 leading-relaxed">
+                  I craft intuitive UIs and seamless UXs that solve real problems and deliver results with a user-centric approach.
+                </p>
+              </div>
+              <div className="mt-auto aspect-[4/3] bg-neutral-200 rounded-xl border border-neutral-300/50 transition-transform duration-500 group-hover:-rotate-2 group-hover:scale-[1.02] flex items-center justify-center">
+                 <div className="w-1/2 h-1/2 bg-neutral-400/10 rounded-full border-2 border-dashed border-neutral-400/30 animate-pulse" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="border-l border-neutral-200" />
+      </div>
+
+      {/* --- LOOPING TAGS (Marquee) --- */}
+      <div className="technical-grid overflow-hidden">
+        <div className="border-r border-neutral-200" />
+        
+        <div className="py-8 relative flex overflow-hidden border-t border-neutral-200">
+          <div className="animate-marquee gap-4 px-4">
+            {tags.map((tag, i) => (
+              <div key={i} className="px-6 py-2.5 border border-neutral-200 rounded-full text-sm font-medium text-neutral-950 bg-white whitespace-nowrap">
+                {tag}
+              </div>
+            ))}
+          </div>
+          {/* Duplikasi untuk animasi yang smooth tanpa putus */}
+          <div className="animate-marquee gap-4 px-4" aria-hidden="true">
+            {tags.map((tag, i) => (
+              <div key={`dup-${i}`} className="px-6 py-2.5 border border-neutral-200 rounded-full text-sm font-medium text-neutral-950 bg-white whitespace-nowrap">
+                {tag}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="border-l border-neutral-200" />
+      </div>
+
+      {/* --- FINAL CTA --- */}
+      <div className="technical-grid">
+        <div className="border-r border-neutral-200" />
+        <div className="flex items-center justify-center gap-3 py-8 border-t border-neutral-200">
+          <Button asChild className="rounded-full bg-neutral-950 text-white px-4 py-2 h-auto text-sm font-medium hover:bg-neutral-800 transition-all gap-2 group shadow-none">
+            <a href="/contact">
+            Hire Me <IconArrowUpRight size={18} stroke={3} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </a>
+          </Button>
+          <div className="w-px h-8 bg-neutral-200 mx-2" />
+          <Button asChild variant="outline" className="rounded-full border-neutral-200 px-4 py-2 h-auto text-sm font-medium text-neutral-950 hover:bg-neutral-50 gap-2 shadow-none">
+            <a href="/contact">
+            Lets Talk <IconMessage2 size={18} stroke={2} />
+            </a>
+          </Button>
+        </div>
+        <div className="border-l border-neutral-200" />
+      </div>
+    </section>
+  )
+}

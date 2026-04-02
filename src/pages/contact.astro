@@ -1,0 +1,13 @@
+---
+import "@/styles/global.css";
+import { Navbar } from '../components/Navbar';
+import { FooterSection } from '../components/FooterSection';
+import { ContactSection } from '../components/ContactSection';
+---
+<Navbar client:load />
+
+<main>
+  <ContactSection client:load />
+</main>
+
+<FooterSection client:load />

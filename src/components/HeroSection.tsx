@@ -18,7 +18,7 @@ export function HeroSection() {
                     {/* Sisi Kiri: Teks & CTA */}
                     <div className="flex flex-col items-start space-y-4">
                         {/* Badge Label */}
-                        <div className="inline-flex px-3 py-1 border border-neutral-200 rounded-full bg-white">
+                        <div className="inline-flex w-fit px-3 py-1 border border-neutral-200 rounded-full bg-white">
                             <span className="text-sm font-medium text-neutral-950 tracking-tight">
                                 Widigda's Portofolio Website
                             </span>
@@ -50,11 +50,13 @@ export function HeroSection() {
                         </p>
 
                         {/* Button Hire Me */}
-                        <Button
+                        <Button asChild
                             className="rounded-full bg-neutral-950 text-white px-4 py-2 h-auto text-sm font-medium hover:bg-neutral-800 transition-all gap-2 group shadow-none"
                         >
-                            Hire Me
-                            <IconArrowUpRight size={22} stroke={2.5} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                            <a href="/contact">
+                                Hire Me
+                                <IconArrowUpRight size={22} stroke={2.5} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                            </a>
                         </Button>
                     </div>
 
