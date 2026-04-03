@@ -3,15 +3,11 @@
 import * as React from "react"
 import { IconArrowRight, IconBolt } from "@tabler/icons-react"
 import { Button } from "@/components/ui/button"
+import { portoData } from "@/lib/data-porto";
 
 export function PortoSection() {
 
-    const projects = [
-        { title: "User Research & Strategy", category: "SaaS Product Website" },
-        { title: "User Research & Strategy", category: "SaaS Product Website" },
-        { title: "User Research & Strategy", category: "SaaS Product Website" },
-        { title: "User Research & Strategy", category: "SaaS Product Website" },
-    ];
+    const projects = portoData.slice(0, 4);
 
     return (
         <section className="w-full">
@@ -28,14 +24,14 @@ export function PortoSection() {
                             <span className="text-sm font-medium text-neutral-950 tracking-tight">Portfolio</span>
                         </div>
                         <h2 className="text-2xl md:text-3xl font-bold tracking-tighter text-neutral-950 leading-tight">
-                            Portfolio highlights <br /> collection <span className="text-yellow-400">⚡</span>
+                            Portfolio highlights <br /> collection. <span className="text-yellow-400">⚡</span>
                         </h2>
                     </div>
 
                     {/* Kolom Kanan: Deskripsi (Fill Height & Bottom-Left Alignment) */}
                     <div className="flex items-end justify-start py-8 px-6 md:px-8">
                         <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
-                            A selection of projects highlighting my creativity and problem-solving approach. From concept to execution, each design balances beauty and function.
+                            A collection of projects that showcase how thoughtful design solves real problems, improves user experience, and delivers meaningful results.
                         </p>
                     </div>
                 </div>
@@ -50,13 +46,10 @@ export function PortoSection() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 py-8 px-6 md:px-8">
                     {projects.map((project, index) => (
-                        <div key={index} className="group cursor-pointer flex flex-col gap-6">
+                        <a key={index} href={`/portofolio/${project.slug}`} className="group cursor-pointer flex flex-col gap-6">
                             {/* Image Placeholder */}
-                            <div className="aspect-[4/3] w-full bg-neutral-100 rounded-xl border border-neutral-200 overflow-hidden relative transition-transform duration-300 ease-out group-hover:rotate-2 group-hover:scale-[1.02]">
-                                {/* Di sini nanti tempat Image kamu */}
-                                <div className="absolute inset-0 flex items-center justify-center text-neutral-300 font-bold uppercase tracking-widest text-xs">
-                                    Project Preview
-                                </div>
+                            <div className="aspect-[16/9] w-full bg-neutral-100 rounded-xl border border-neutral-200 overflow-hidden relative transition-transform duration-300 ease-out group-hover:rotate-2 group-hover:scale-[1.02]">
+                                <img src={project.thumbnail} className="w-full h-full object-cover" alt={project.title} />
                             </div>
 
                             {/* Card Info */}
@@ -75,7 +68,7 @@ export function PortoSection() {
                                     <IconArrowRight size={20} stroke={2} />
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     ))}
                 </div>
 

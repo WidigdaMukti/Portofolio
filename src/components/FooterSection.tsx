@@ -40,7 +40,7 @@ export const FooterSection = () => {
 
         {/* Content: Heading & Button */}
         <div className="flex flex-col items-center justify-center py-8 px-8 text-center">
-          <h2 className="text-4xl font-bold tracking-tight text-neutral-950 leading-[1.1] mb-8">
+          <h2 className="text-4xl font-bold tracking-tight leading-tight text-neutral-950 mb-4">
             Lets Collaborate and <br /> Craft Your Vision
           </h2>
 

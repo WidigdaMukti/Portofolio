@@ -1,11 +1,8 @@
 ---
 import "@/styles/global.css";
+import MainLayout from '../../layouts/MainLayout.astro';
 import { PortfolioList } from '../../components/PortfolioList';
-import { Navbar } from "../../components/Navbar";
-import { FooterSection } from "../../components/FooterSection";
 ---
-<Navbar client:load />
-<main>
+<MainLayout title="Portofolio">
   <PortfolioList client:load />
-</main>
-<FooterSection client:load />
+</MainLayout>

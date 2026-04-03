@@ -19,12 +19,12 @@ export function ContactSection() {
               <span className="text-sm font-medium text-neutral-950 tracking-tight">Get in touch</span>
             </div>
             <h2 className="text-2xl md:text-3xl font-bold tracking-tighter text-neutral-950 leading-tight">
-              Let's Connect <br /> your ideas. 👋
+              Let’s Turn Ideas <br /> Into Impact. 🚀
             </h2>
           </div>
           <div className="flex items-end justify-start py-8 px-6 md:px-8">
             <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
-              Have a project in mind or want to discuss a collaboration? I'd love to hear from you. Fill out the form below and I'll get back to you as soon as possible.
+              Built for meaningful collaboration and impactful outcomes. Share project goals, ideas, or challenges to start shaping better digital experiences.
             </p>
           </div>
         </div>

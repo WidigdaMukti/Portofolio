@@ -20,13 +20,13 @@ export function HeroSection() {
                         {/* Badge Label */}
                         <div className="inline-flex w-fit px-3 py-1 border border-neutral-200 rounded-full bg-white">
                             <span className="text-sm font-medium text-neutral-950 tracking-tight">
-                                Widigda's Portofolio Website
+                                Widigda Mukti  •  UX/UI Designer
                             </span>
                         </div>
 
                         {/* Main Heading */}
                         <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-neutral-950 leading-[1.15]">
-                            Crafting{" "}
+                            Designing{" "}
                             <span className="inline-flex align-middle bg-[#FFD0D0] p-1.5 rounded-md mx-1 -rotate-12 transition-transform hover:rotate-0 duration-300">
                                 {/* Figma Icon Placeholder - Bisa diganti SVG Figma */}
                                 <svg width="24" height="24" viewBox="0 0 38 57" fill="none" className="w-6 h-6 md:w-8 md:h-8">
@@ -37,16 +37,14 @@ export function HeroSection() {
                                     <path d="M19 0H28.5C33.7467 0 38 4.2533 38 9.5C38 14.7467 33.7467 19 28.5 19H19V0Z" fill="#FF7262" />
                                 </svg>
                             </span>{" "}
-                            Designs <br />
-                            That Work Harder, <br />
-                            Think <span className="text-neutral-400">Bigger.</span>
+                            Better <br />
+                            Digital Experiences <br />
+                            for <span className="text-neutral-400">Real Impact.</span>
                         </h1>
 
                         {/* Description */}
                         <p className="max-w-xl text-sm md:text-base text-neutral-500 leading-relaxed">
-                            Whether you need a complete brand identity or a conversion-focused
-                            website, I create designs that deliver. With a keen eye for detail, I ensure
-                            every element serves both form and function.
+                            Digital experiences designed to improve usability and create real impact. Each detail is considered to support clarity, function, and seamless interaction.
                         </p>
 
                         {/* Button Hire Me */}

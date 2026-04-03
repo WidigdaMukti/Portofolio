@@ -1,0 +1,33 @@
+---
+import "@/styles/global.css";
+import MainLayout from '../../layouts/MainLayout.astro';
+import { DetailSection } from '../../components/DetailSection';
+import { portoData } from '../../lib/data-porto';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+    return portoData.map((porto) => ({
+        params: { slug: porto.slug },
+        props: { porto },
+    }));
+}
+
+const { slug } = Astro.params;
+const porto = Astro.props.porto || portoData.find(p => p.slug === slug);
+
+if (!porto) {
+    return Astro.redirect('/404');
+}
+
+const relatedProjects = portoData.filter((p) => p.slug !== porto.slug).slice(0, 2);
+---
+
+<MainLayout title={porto.title} postId={porto.id}>
+    <DetailSection 
+        data={porto} 
+        relatedItems={relatedProjects} 
+        type="portofolio" 
+        client:load 
+    />
+</MainLayout>

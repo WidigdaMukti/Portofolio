@@ -19,14 +19,14 @@ export function AboutSection() {
                             <span className="text-sm font-medium text-neutral-950 tracking-tight">About me</span>
                         </div>
                         <h2 className="text-2xl md:text-3xl font-bold tracking-tighter text-neutral-950 leading-tight">
-                            Design that tells <br /> your story. 💬
+                            Design that connects <br /> ideas and people. 🎯
                         </h2>
                     </div>
 
                     {/* Kolom Kanan: Deskripsi (Align Bottom-Left) */}
                     <div className="flex items-end justify-start py-8 px-6 md:px-8">
                         <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
-                            I help brands communicate clearly and confidently through thoughtful, goal-driven visuals that resonate with their audience and strengthen their identity.
+                            Creating meaningful digital experiences where technology, aesthetics, and human needs come together seamlessly.
                         </p>
                     </div>
                 </div>
@@ -75,16 +75,16 @@ export function AboutSection() {
                     {/* KOLOM KANAN: Teks Cerita */}
                     <div className="flex flex-col gap-4 text-sm text-neutral-800 leading-relaxed md:text-base">
                         <p>
-                            Design isn't just my job—it's my passion. What began as a hobby turned into a full-fledged career when I realized the true power of design: not just making things beautiful, but making them work better.
+                            Design and technology have always been closely connected in my journey. With a background in Informatics Engineering, I developed a strong foundation in problem-solving and system thinking, while also nurturing my interest in visual design and creativity.
                         </p>
                         <p>
-                            My approach is all about crafting user interfaces that serve a real purpose. I believe great design should solve problems and provide seamless experiences. This meticulous attention to detail allows me to create lasting relationships with clients.
+                            What started as a curiosity for building and designing systems evolved into a deeper focus on UI/UX. I see design not only as how something looks, but how it works, feels, and connects with users in a meaningful way.
                         </p>
                         <p>
-                            I'm a perfectionist when it comes to the details, and I believe it's the little things that elevate design from good to great. This meticulous attention to detail allows me to create lasting relationships with clients. I'm a perfectionist when it comes to the details, and I believe it's the little things that elevate design from good to great.
+                            My approach centers on creating balanced experiences, where aesthetics meet functionality. I enjoy translating complex ideas into simple, intuitive interfaces that align with both user needs and technical feasibility.
                         </p>
                         <p>
-                            This meticulous attention to detail allows me to create lasting relationships with clients. I'm a perfectionist when it comes to the details, and I believe it's the little things that elevate design from good to great.
+                            For me, great design is about harmony between humans and technology. It’s about crafting solutions that are not only visually pleasing, but also purposeful, efficient, and able to create real impact.
                         </p>
                     </div>
 

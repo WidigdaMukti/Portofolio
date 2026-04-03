@@ -2,7 +2,8 @@
 // src/layouts/MainLayout.astro
 import "@/styles/global.css";
 import { supabase } from "@/lib/supabase";
-import PublicPanel from "@/components/PublicPanel";
+import { Navbar } from "@/components/Navbar";
+import { FooterSection } from "@/components/FooterSection";
 
 const { title, postId = null } = Astro.props; 
 const pathname = Astro.url.pathname;
@@ -65,9 +66,15 @@ if (!pathname.startsWith('/admin')) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{title} | Widigda's Portfolio</title>
     </head>
-    <body class="antialiased">
-        <PublicPanel client:load>
-            <slot />
-        </PublicPanel>
+    <body class="antialiased bg-white text-neutral-950 font-sans">
+        <div class="relative min-h-screen flex flex-col">
+            <Navbar client:load />
+            
+            <main class="flex-1">
+                <slot />
+            </main>
+
+            <FooterSection />
+        </div>
     </body>
 </html>

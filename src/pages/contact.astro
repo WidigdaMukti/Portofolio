@@ -1,13 +1,8 @@
 ---
 import "@/styles/global.css";
-import { Navbar } from '../components/Navbar';
-import { FooterSection } from '../components/FooterSection';
+import MainLayout from '../layouts/MainLayout.astro';
 import { ContactSection } from '../components/ContactSection';
 ---
-<Navbar client:load />
-
-<main>
+<MainLayout title="Contact Us">
   <ContactSection client:load />
-</main>
-
-<FooterSection client:load />
+</MainLayout>

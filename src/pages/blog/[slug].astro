@@ -1,0 +1,34 @@
+---
+// src/pages/blog/[slug].astro
+import "@/styles/global.css";
+import MainLayout from '../../layouts/MainLayout.astro';
+import { DetailSection } from '../../components/DetailSection';
+import { blogData } from '../../lib/data-blog';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+    return blogData.map((blog) => ({
+        params: { slug: blog.slug },
+        props: { blog },
+    }));
+}
+
+const { slug } = Astro.params;
+const blog = Astro.props.blog || blogData.find(b => b.slug === slug);
+
+if (!blog) {
+    return Astro.redirect('/404');
+}
+
+const relatedBlogs = blogData.filter((b) => b.slug !== blog.slug).slice(0, 2);
+---
+
+<MainLayout title={blog.title} postId={blog.id}>
+    <DetailSection 
+        data={blog} 
+        relatedItems={relatedBlogs} 
+        type="blog" 
+        client:load 
+    />
+</MainLayout>

@@ -22,12 +22,12 @@ export function ServicesSection() {
                 <span className="text-sm font-medium text-neutral-950 tracking-tight">Services</span>
             </div>
             <h2 className="text-2xl md:text-3xl font-bold tracking-tighter text-neutral-950 leading-tight">
-              Design services that <br /> make an impact. 🎨
+              Design services that <br /> drive results. 🚀
             </h2>
           </div>
           <div className="flex items-end md:pt-14">
             <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
-              Whether you need a complete brand identity or a conversion-focused website, I create designs that deliver.
+              Focused on crafting user-centered digital products that balance usability, business goals, and seamless interaction.
             </p>
           </div>
         </div>
@@ -47,7 +47,7 @@ export function ServicesSection() {
               <div className="space-y-3">
                 <h3 className="text-xl font-semibold text-neutral-950 tracking-tight">UI Design & Visual Identity</h3>
                 <p className="text-sm text-neutral-500 leading-relaxed">
-                  I craft intuitive UIs and seamless UXs that solve real problems and deliver results with a user-centric approach.
+                  Designing clean, scalable interfaces and visual systems that create consistency, strengthen brand identity, and improve overall user experience.
                 </p>
               </div>
               <div className="mt-auto relative aspect-[4/3] bg-neutral-200 rounded-xl overflow-hidden border border-neutral-300/50 transition-transform duration-500 group-hover:rotate-2 group-hover:scale-[1.02]">
@@ -62,7 +62,7 @@ export function ServicesSection() {
             <div className="bg-white p-6 md:p-8 rounded-xl border border-neutral-200 group cursor-pointer hover:bg-neutral-50 transition-colors">
               <h3 className="text-xl font-semibold text-neutral-950 tracking-tight mb-3">User Research & Strategy</h3>
               <p className="text-sm text-neutral-500 leading-relaxed">
-                I craft intuitive UIs and seamless UXs that solve real problems and deliver results with a user-centric approach.
+                Understanding user behavior and business needs to define clear strategies that guide product decisions and reduce guesswork.
               </p>
             </div>
           </div>
@@ -73,7 +73,7 @@ export function ServicesSection() {
             <div className="bg-white p-6 md:p-8 rounded-xl border border-neutral-200 group cursor-pointer hover:bg-neutral-50 transition-colors">
               <h3 className="text-xl font-semibold text-neutral-950 tracking-tight mb-3">UX Design & Wireframing</h3>
               <p className="text-sm text-neutral-500 leading-relaxed">
-                I craft intuitive UIs and seamless UXs that solve real problems and deliver results with a user-centric approach.
+                Structuring user flows and wireframes that simplify complex systems into intuitive and efficient experiences.
               </p>
             </div>
 
@@ -82,7 +82,7 @@ export function ServicesSection() {
               <div className="space-y-3">
                 <h3 className="text-xl font-semibold text-neutral-950 tracking-tight">Interaction & Prototyping</h3>
                 <p className="text-sm text-neutral-500 leading-relaxed">
-                  I craft intuitive UIs and seamless UXs that solve real problems and deliver results with a user-centric approach.
+                  Bringing ideas to life through interactive prototypes that validate concepts, improve usability, and support faster development.
                 </p>
               </div>
               <div className="mt-auto aspect-[4/3] bg-neutral-200 rounded-xl border border-neutral-300/50 transition-transform duration-500 group-hover:-rotate-2 group-hover:scale-[1.02] flex items-center justify-center">

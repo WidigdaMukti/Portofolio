@@ -48,12 +48,12 @@ export function ContentForm({ type, mode, initialData }: ContentFormProps) {
     // --- STATES ---
     const [title, setTitle] = React.useState(initialData?.title || "")
     const [slug, setSlug] = React.useState(initialData?.slug || "")
+    const [subtitle, setSubtitle] = React.useState(initialData?.subtitle || "")
     const [content, setContent] = React.useState(initialData?.content || "")
     const [category, setCategory] = React.useState(initialData?.category || "")
     const [status, setStatus] = React.useState<"Published" | "Draft">(initialData?.status as any || "Draft")
     const [date, setDate] = React.useState<Date>(initialData?.date ? new Date(initialData.date) : new Date())
     const [thumbnail, setThumbnail] = React.useState(initialData?.thumbnail || "")
-    
     const [isLoading, setIsLoading] = React.useState(false)
     const [pendingFile, setPendingFile] = React.useState<File | null>(null)
     const fileInputRef = React.useRef<HTMLInputElement>(null)
@@ -168,7 +168,7 @@ export function ContentForm({ type, mode, initialData }: ContentFormProps) {
                 const { data: { publicUrl } } = supabase.storage.from('thumbnails').getPublicUrl(fileName);
                 finalUrl = publicUrl;
             }
-            const payload = { ...(isEdit && { id: initialData?.id }), title, slug, content, category, status, thumbnail: finalUrl, date: format(date, "yyyy-MM-dd") };
+            const payload = { ...(isEdit && { id: initialData?.id }), title, slug, subtitle, content, category, status, thumbnail: finalUrl, date: format(date, "yyyy-MM-dd") };
             const { error } = await supabase.from(tableName).upsert(payload);
             if (error) throw error;
             return new Promise((res) => setTimeout(() => { window.location.href = `/admin/${path}`; res(true); }, 1500));
@@ -200,6 +200,7 @@ export function ContentForm({ type, mode, initialData }: ContentFormProps) {
                         <CardContent className="p-5 lg:p-6 space-y-5">
                             <div className="space-y-2"><Label className="text-sm font-semibold">Title</Label><Input value={title} onChange={(e) => handleTitleChange(e.target.value)} placeholder={`Judul ${type}...`} className="h-9 bg-background" /></div>
                             <div className="space-y-2"><Label className="text-sm font-semibold">Slug</Label><div className="flex items-center gap-2"><span className="text-xs text-muted-foreground bg-muted px-3 h-9 flex items-center rounded-md border border-input">domain.com/{path}/</span><Input value={slug} onChange={(e) => setSlug(e.target.value)} className="h-9 bg-background" /></div></div>
+                            <div className="space-y-2"><Label className="text-sm font-semibold">Subtitle</Label><Input value={subtitle} onChange={(e) => setSubtitle(e.target.value)} placeholder="Subtitle singkat..." className="h-9 bg-background" /></div>
                             <div className="space-y-2"><Label className="text-sm font-semibold">Content Area</Label><Textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder="Tulis konten..." className="min-h-[400px] bg-background resize-none p-4" /></div>
                         </CardContent>
                     </Card>

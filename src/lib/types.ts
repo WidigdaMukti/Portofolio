@@ -5,6 +5,7 @@ export interface ContentData {
   thumbnail: string;
   title: string;
   slug: string;
+  subtitle?: string;
   category: string;
   content: string;
   status: "Published" | "Draft";

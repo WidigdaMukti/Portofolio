@@ -3,48 +3,50 @@
 import * as React from "react"
 import { ChevronsUpDown, ChevronsDownUp } from "lucide-react"
 
-// Memindahkan data statis ke luar komponen agar tidak dirender ulang ("re-create") pada setiap kali render
 const EXPERIENCES = [
     {
         id: 1,
-        title: "UIUX Designer",
+        title: "UI/UX Designer",
         company: "Nore Inovasi",
         period: "Oktober 2024 - Now",
         duration: "17 Months",
-        logo: "/icons/nore.svg", 
+        logo: "/svg/Nore.svg", 
         description: [
-            "Expert in creating user-centered and intuitive digital experiences.",
-            "Skilled in wireframing, prototyping, and interactive design.",
-            "Strong eye for visual design, layout, and consistency.",
-            "Collaborative problem-solver focused on seamless user journeys."
+            "Designed end-to-end UI/UX for web and mobile applications, ensuring intuitive and visually engaging user interfaces.",
+            "Conducted user research and translated insights into actionable design decisions aligned with user needs and business goals.",
+            "Collaborated closely with developers to ensure seamless implementation and design consistency across products.",
+            "Delivered design solutions based on client requirements while maintaining usability best practices.",
+            "Created wireframes, prototypes, and high-fidelity designs to support product development cycles."
         ]
     },
     {
         id: 2,
         title: "Intern UI Designer",
         company: "Telkom Indonesia",
-        period: "Oktober 2024 - Now",
-        duration: "17 Months",
-        logo: "/icons/LinkedIn.svg", 
+        period: "Jul 2023 - Des 2023",
+        duration: "6 Months",
+        logo: "/svg/Telkom.svg", 
         description: [
-            "Assisting in the design process for various digital products.",
-            "Conducting user research and empathy mapping for internal tools.",
-            "Creating high-fidelity mockups and interactive prototypes.",
-            "Collaborating with developers to ensure design feasibility."
+            "UI/UX design for the Netmonk system, focusing on usability and performance-driven interfaces.",
+            "Worked within a Scrum environment using Jira to manage tasks, track progress, and align with agile workflows.",
+            "Collaborated with cross-functional UI/UX teams to refine user experience and maintain design consistency.",
+            "Implemented standardized design systems to improve usability and scalability across the platform.",
+            "Ensured all design outputs aligned with user needs while supporting technical and business requirements."
         ]
     },
     {
         id: 3,
         title: "Intern UI/UX Specialist",
         company: "Stechoq Robotika Indonesia",
-        period: "Oktober 2024 - Now",
-        duration: "17 Months",
-        logo: "/icons/Upwork.svg", 
+        period: "Feb 2024 - Jun 2024",
+        duration: "5 Months",
+        logo: "/svg/Stechoq.svg", 
         description: [
-            "Designing complex dashboard interfaces for industrial robotics.",
-            "Developing design systems to maintain consistency across platforms.",
-            "Performing usability testing with stakeholders in the manufacturing sector.",
-            "Translating technical requirements into user-friendly UI solutions."
+            "Designed UI/UX solutions for Industry 4.0 systems, focusing on efficiency and user-centered workflows.",
+            "Developed interfaces for supply chain management systems across web and mobile platforms.",
+            "Collaborated with cross-functional teams to deliver scalable and industry-standard design solutions.",
+            "Applied user-centered design principles to enhance usability in complex industrial systems.",
+            "Produced professional, high-quality designs aligned with modern industry standards and business goals."
         ]
     }
 ];
@@ -67,12 +69,12 @@ export function ExperienceSection() {
                             <span className="text-sm font-medium text-neutral-950 tracking-tight">Experiences</span>
                         </div>
                         <h2 className="text-2xl md:text-3xl font-bold tracking-tighter text-neutral-950 leading-tight">
-                            Experience that <br /> delivers. 😎
+                            Experience that <br /> matters. 🚀
                         </h2>
                     </div>
                     <div className="flex items-end justify-start md:pt-14">
                         <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
-                            From concept to completion, I combine design thinking with thoughtful execution.
+                            Shaping meaningful solutions that improve usability, streamline workflows, and deliver real value to users and businesses.
                         </p>
                     </div>
                 </div>
@@ -96,17 +98,17 @@ export function ExperienceSection() {
                                 aria-controls={`experience-content-${exp.id}`}
                                 className="w-full text-left grid grid-cols-[80px_1fr] md:grid-cols-[160px_1fr] group focus:outline-none focus-visible:bg-neutral-50 transition-colors"
                             >
-                                <div className="border-r border-neutral-200 flex items-center justify-center py-6 md:py-8 px-4">
-                                    <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl border border-neutral-200 overflow-hidden flex items-center justify-center bg-white shadow-sm transition-all duration-300 group-hover:scale-105 group-hover:border-neutral-300">
+                                <div className="border-r border-neutral-200 flex items-center justify-center py-4 px-4">
+                                    <div className="w-20 h-20 overflow-hidden flex items-center justify-center ">
                                         <img 
                                             src={exp.logo} 
-                                            className="w-8 h-8 md:w-10 md:h-10 object-contain grayscale group-hover:grayscale-0 transition-all duration-300" 
+                                            className="w-20 h-20 object-contain" 
                                             alt={exp.company}
                                         />
                                     </div>
                                 </div>
 
-                                <div className="flex items-center justify-between py-6 md:py-8 px-6 md:px-8">
+                                <div className="flex items-center justify-between py-8 px-8">
                                     <div className="flex flex-col gap-1">
                                         <h3 className="text-lg md:text-xl font-semibold text-neutral-950 tracking-tight leading-tight">
                                             {exp.title}
