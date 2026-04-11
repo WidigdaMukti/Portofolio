@@ -38,6 +38,10 @@ interface ContentFormProps {
     initialData?: ContentData;
 }
 
+import { useCreateBlockNote } from "@blocknote/react"
+import { BlockNoteView } from "@blocknote/shadcn"
+import "@blocknote/shadcn/style.css"
+
 export function ContentForm({ type, mode, initialData }: ContentFormProps) {
     const isBlog = type === 'blog';
     const isEdit = mode === 'edit';
@@ -57,6 +61,20 @@ export function ContentForm({ type, mode, initialData }: ContentFormProps) {
     const [isLoading, setIsLoading] = React.useState(false)
     const [pendingFile, setPendingFile] = React.useState<File | null>(null)
     const fileInputRef = React.useRef<HTMLInputElement>(null)
+
+    // --- BLOCKNOTE EDITOR ---
+    const editor = useCreateBlockNote()
+
+    // Initialize content from HTML if in edit mode
+    React.useEffect(() => {
+        async function loadInitialHTML() {
+            if (isEdit && initialData?.content) {
+                const blocks = await editor.tryParseHTMLToBlocks(initialData.content)
+                editor.replaceBlocks(editor.document, blocks)
+            }
+        }
+        loadInitialHTML()
+    }, [editor, isEdit, initialData?.content])
 
     // --- NEW STATES FOR CATEGORIES ---
     const [categories, setCategories] = React.useState<{id: string, name: string}[]>([])
@@ -201,7 +219,19 @@ export function ContentForm({ type, mode, initialData }: ContentFormProps) {
                             <div className="space-y-2"><Label className="text-sm font-semibold">Title</Label><Input value={title} onChange={(e) => handleTitleChange(e.target.value)} placeholder={`Judul ${type}...`} className="h-9 bg-background" /></div>
                             <div className="space-y-2"><Label className="text-sm font-semibold">Slug</Label><div className="flex items-center gap-2"><span className="text-xs text-muted-foreground bg-muted px-3 h-9 flex items-center rounded-md border border-input">domain.com/{path}/</span><Input value={slug} onChange={(e) => setSlug(e.target.value)} className="h-9 bg-background" /></div></div>
                             <div className="space-y-2"><Label className="text-sm font-semibold">Subtitle</Label><Input value={subtitle} onChange={(e) => setSubtitle(e.target.value)} placeholder="Subtitle singkat..." className="h-9 bg-background" /></div>
-                            <div className="space-y-2"><Label className="text-sm font-semibold">Content Area</Label><Textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder="Tulis konten..." className="min-h-[400px] bg-background resize-none p-4" /></div>
+                            <div className="space-y-2">
+                                <Label className="text-sm font-semibold">Content Area</Label>
+                                <div className="border border-input rounded-md overflow-hidden bg-background min-h-[400px] py-4">
+                                    <BlockNoteView 
+                                        editor={editor} 
+                                        theme="light"
+                                        onChange={async () => {
+                                            const html = await editor.blocksToHTMLLossy(editor.document);
+                                            setContent(html);
+                                        }}
+                                    />
+                                </div>
+                            </div>
                         </CardContent>
                     </Card>
                 </div>

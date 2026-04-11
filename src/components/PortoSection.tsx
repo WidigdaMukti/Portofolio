@@ -17,9 +17,9 @@ export function PortoSection() {
                 <div className="border-r border-neutral-200" />
 
                 {/* Sub-grid Header: Tanpa border tengah agar sejajar dengan grid kartu di bawah */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2">
                     {/* Kolom Kiri: Judul & Badge */}
-                    <div className="flex flex-col gap-4 py-8 px-6 md:px-8">
+                    <div className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
                         <div className="inline-flex w-fit px-3 py-1 border border-neutral-200 rounded-full bg-white">
                             <span className="text-sm font-medium text-neutral-950 tracking-tight">Portfolio</span>
                         </div>
@@ -29,7 +29,7 @@ export function PortoSection() {
                     </div>
 
                     {/* Kolom Kanan: Deskripsi (Fill Height & Bottom-Left Alignment) */}
-                    <div className="flex items-end justify-start py-8 px-6 md:px-8">
+                    <div className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
                         <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
                             A collection of projects that showcase how thoughtful design solves real problems, improves user experience, and delivers meaningful results.
                         </p>
@@ -44,7 +44,7 @@ export function PortoSection() {
             <div className={`technical-grid`}>
                 <div className="border-r border-neutral-200" />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 py-8 px-6 md:px-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-8 md:gap-y-12 py-8 md:py-12 px-6 md:px-8">
                     {projects.map((project, index) => (
                         <a key={index} href={`/portofolio/${project.slug}`} className="group cursor-pointer flex flex-col gap-6">
                             {/* Image Placeholder */}
@@ -79,14 +79,14 @@ export function PortoSection() {
             <div className={`technical-grid border-b border-neutral-200`}>
                 <div className="border-r border-neutral-200" />
 
-                <div className="flex justify-center py-8 border-t border-neutral-200">
+                <div className="flex justify-center py-6 md:py-8 border-t border-neutral-200">
                     <Button asChild
                         variant="outline"
-                        className="rounded-full border-neutral-200 px-4 py-2 h-auto text-sm font-medium text-neutral-950 hover:bg-neutral-50 gap-2 shadow-none"
+                        className="group rounded-full border-neutral-200 px-4 py-2 h-auto text-sm font-medium text-neutral-950 hover:bg-neutral-800 hover:text-white gap-2 shadow-none transition-all"
                     >
                         <a href="/portofolio">
                             See More
-                            <IconArrowRight size={18} stroke={2.5} />
+                            <IconArrowRight size={18} stroke={2.5} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                         </a>
                     </Button>
                 </div>

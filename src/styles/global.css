@@ -134,15 +134,11 @@
   .technical-grid {
     display: grid;
     width: 100%;
-    /* Default Mobile */
-    grid-template-columns: 100px 1fr 100px;
-  }
-
-  /* Breakpoint MD (768px) sesuai standar v4 */
-  @media (width >= 48rem) {
-    .technical-grid {
-      grid-template-columns: 200px 1fr 200px;
-    }
+    max-width: 1340px; /* 1140px konten tengah + 2x 100px gutter sisi */
+    margin: 0 auto;
+    /* Gutter Kiri & Kanan (1fr) akan menyusut duluan dari ~100px sampai sisa minimal 16px.
+       Setelah mentok 16px, barulah kolom tengah ikut menyusut menyesuaikan layar HP. */
+    grid-template-columns: minmax(16px, 1fr) minmax(auto, 1140px) minmax(16px, 1fr);
   }
 }
 
@@ -151,13 +147,89 @@
   100% { transform: translateX(-50%); }
 }
 
+@keyframes marquee-vertical {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes marquee-vertical-reverse {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+
 .animate-marquee {
   display: flex;
   white-space: nowrap;
   animation: marquee 40s linear infinite;
 }
 
+.animate-marquee-vertical {
+  display: flex;
+  flex-direction: column;
+  animation: marquee-vertical 30s linear infinite;
+}
+
+.animate-marquee-vertical-reverse {
+  display: flex;
+  flex-direction: column;
+  animation: marquee-vertical-reverse 30s linear infinite;
+}
+
 /* Biar pas di-hover jalannya pelan atau berhenti */
-.animate-marquee:hover {
+.animate-marquee:hover,
+.animate-marquee-vertical:hover,
+.animate-marquee-vertical-reverse:hover {
   animation-play-state: paused;
+}
+@keyframes text-shimmer-sweep {
+  0% {
+    -webkit-mask-position: 150% center;
+    mask-position: 150% center;
+  }
+  100% {
+    -webkit-mask-position: -50% center;
+    mask-position: -50% center;
+  }
+}
+
+.animate-text-shimmer {
+  -webkit-mask-image: linear-gradient(60deg, #000 40%, rgba(0,0,0,0.3) 50%, #000 60%);
+  -webkit-mask-size: 250% 100%;
+  mask-image: linear-gradient(60deg, #000 40%, rgba(0,0,0,0.3) 50%, #000 60%);
+  mask-size: 250% 100%;
+  animation: text-shimmer-sweep 3.5s linear infinite;
+}
+
+.group:hover .animate-text-shimmer {
+  animation: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+@keyframes btn-shimmer-sweep {
+  0% { left: -100%; }
+  100% { left: 250%; }
+}
+
+.animate-btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-20deg);
+  animation: btn-shimmer-sweep 3.5s linear infinite;
+  pointer-events: none;
+}
+
+.animate-btn-shimmer:hover::after {
+  animation: none;
+  opacity: 0;
 }

@@ -63,8 +63,8 @@ export function ExperienceSection() {
             {/* HEADER SECTION */}
             <div className="technical-grid border-b border-neutral-200">
                 <div className="border-r border-neutral-200" />
-                <div className="grid grid-cols-1 md:grid-cols-2 py-8 px-6 md:px-8">
-                    <div className="flex flex-col gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2">
+                    <div className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
                         <div className="inline-flex w-fit px-3 py-1 border border-neutral-200 rounded-full bg-white">
                             <span className="text-sm font-medium text-neutral-950 tracking-tight">Experiences</span>
                         </div>
@@ -72,7 +72,7 @@ export function ExperienceSection() {
                             Experience that <br /> matters. 🚀
                         </h2>
                     </div>
-                    <div className="flex items-end justify-start md:pt-14">
+                    <div className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
                         <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
                             Shaping meaningful solutions that improve usability, streamline workflows, and deliver real value to users and businesses.
                         </p>
@@ -108,7 +108,7 @@ export function ExperienceSection() {
                                     </div>
                                 </div>
 
-                                <div className="flex items-center justify-between py-8 px-8">
+                                <div className="flex items-center justify-between py-6 md:py-8 px-6 md:px-8">
                                     <div className="flex flex-col gap-1">
                                         <h3 className="text-lg md:text-xl font-semibold text-neutral-950 tracking-tight leading-tight">
                                             {exp.title}
@@ -137,7 +137,7 @@ export function ExperienceSection() {
                                 }`}
                             >
                                 <div className="overflow-hidden">
-                                    <div className="border-t border-neutral-200 py-8 px-6 md:px-8 bg-white">
+                                    <div className="border-t border-neutral-200 py-6 md:py-8 px-6 md:px-8 bg-white">
                                         <ul className="flex flex-col gap-3">
                                             {exp.description.map((point, i) => (
                                                 <li key={i} className="flex items-start gap-3 text-sm md:text-base text-neutral-500 leading-relaxed">

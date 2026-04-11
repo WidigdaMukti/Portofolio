@@ -14,18 +14,18 @@ export const FooterSection = () => {
         {/* Gutter Kiri */}
         <div className="border-r border-neutral-200" />
 
-        {/* Content: Links dengan separator vertikal tipis */}
-        <div className="flex items-center justify-center py-8 gap-6 text-md font-medium text-neutral-500">
+        {/* Content: Links dengan separator vertikal tipis (Responsif) */}
+        <div className="flex flex-wrap items-center justify-center py-6 md:py-8 gap-x-6 gap-y-4 md:gap-6 text-base font-medium text-neutral-500 px-6 md:px-4 w-full">
           <a href="/" className="hover:text-neutral-950 transition-colors">Home</a>
-          <div className="h-4 w-px bg-neutral-200" />
+          <div className="h-4 w-px bg-neutral-200 hidden md:block" />
           <a href="/portofolio" className="hover:text-neutral-950 transition-colors">Portofolio</a>
-          <div className="h-4 w-px bg-neutral-200" />
+          <div className="h-4 w-px bg-neutral-200 hidden md:block" />
           <a href="/#services" className="hover:text-neutral-950 transition-colors">Services</a>
-          <div className="h-4 w-px bg-neutral-200" />
+          <div className="h-4 w-px bg-neutral-200 hidden md:block" />
           <a href="/#about" className="hover:text-neutral-950 transition-colors">About</a>
-          <div className="h-4 w-px bg-neutral-200" />
+          <div className="h-4 w-px bg-neutral-200 hidden md:block" />
           <a href="/#experience" className="hover:text-neutral-950 transition-colors">Experience</a>
-          <div className="h-4 w-px bg-neutral-200" />
+          <div className="h-4 w-px bg-neutral-200 hidden md:block" />
           <a href="/blog" className="hover:text-neutral-950 transition-colors">Blog</a>
         </div>
 
@@ -39,13 +39,13 @@ export const FooterSection = () => {
         <div className="border-r border-neutral-200" />
 
         {/* Content: Heading & Button */}
-        <div className="flex flex-col items-center justify-center py-8 px-8 text-center">
-          <h2 className="text-4xl font-bold tracking-tight leading-tight text-neutral-950 mb-4">
-            Lets Collaborate and <br /> Craft Your Vision
+        <div className="flex flex-col items-center justify-center py-10 md:py-16 px-6 md:px-8 text-center">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight text-neutral-950 mb-6 md:mb-8">
+            Lets Collaborate and <br className="hidden md:block" /> Craft Your Vision
           </h2>
 
           <Button asChild
-            className="rounded-full bg-neutral-950 text-white px-4 py-2 h-auto text-sm font-medium hover:bg-neutral-800 transition-all gap-2 group shadow-none"
+            className="group animate-btn-shimmer rounded-full bg-neutral-950 text-white px-5 md:px-6 py-2.5 md:py-3 h-auto text-sm md:text-base font-medium hover:bg-neutral-800 transition-all gap-2 shadow-none"
           >
             <a href="/contact">
               Lets Talk
@@ -64,7 +64,7 @@ export const FooterSection = () => {
         <div className="border-r border-neutral-200" />
 
         {/* Content: Copyright Text */}
-        <div className="py-8 flex justify-center">
+        <div className="py-6 md:py-8 flex justify-center">
           <p className="text-sm text-neutral-400 tracking-wide">
             ©Copyright 2026 Widigda. All Right Reserves.
           </p>

@@ -8,16 +8,18 @@ interface DetailProps {
     data: any;
     relatedItems: any[];
     type: 'portofolio' | 'blog';
+    prevLink?: string;
+    nextLink?: string;
 }
 
-export function DetailSection({ data, relatedItems, type }: DetailProps) {
+export function DetailSection({ data, relatedItems, type, prevLink, nextLink }: DetailProps) {
     return (
         <section className="w-full bg-white">
             {/* --- 1. HEADER SECTION --- */}
             <div className="technical-grid border-b border-neutral-200">
                 <div className="border-r border-neutral-200" />
                 
-                <div className="py-8 px-6 md:px-8 flex flex-col gap-6">
+                <div className="py-6 md:py-8 px-6 md:px-8 flex flex-col gap-6">
                     <nav className="flex items-center gap-2 text-sm font-medium text-neutral-400">
                         <a href="/" className="hover:text-neutral-950 transition-colors">Home</a>
                         <IconChevronRight size={14} className="text-neutral-300" />
@@ -50,7 +52,7 @@ export function DetailSection({ data, relatedItems, type }: DetailProps) {
             {/* --- 3. CONTENT AREA (PROSE) --- */}
             <div className="technical-grid">
                 <div className="border-r border-neutral-200" />
-                <div className="py-16 px-6 md:px-8">
+                <div className="py-10 md:py-16 px-6 md:px-8">
                     <div className="max-w-4xl space-y-8">
                         <div className="flex items-center gap-3 text-sm font-medium text-neutral-400 -mt-8">
                             <span>{data.category}</span>
@@ -74,13 +76,26 @@ export function DetailSection({ data, relatedItems, type }: DetailProps) {
             {/* --- 4. PAGINATION --- */}
             <div className="technical-grid border-b border-neutral-200">
                 <div className="border-r border-neutral-200" />
-                <div className="flex items-center justify-between py-8 px-6 md:px-8 border-t border-neutral-200">
-                    <Button variant="outline" className="rounded-full gap-2 text-neutral-950 font-medium shadow-none border-neutral-200 hover:bg-neutral-50 px-4 py-2 h-auto">
-                        <IconChevronLeft size={18} strokeWidth={2.5} /> Previous Post
-                    </Button>
-                    <Button variant="outline" className="rounded-full gap-2 text-neutral-950 font-medium shadow-none border-neutral-200 hover:bg-neutral-50 px-4 py-2 h-auto">
-                        Next Post <IconChevronRight size={18} strokeWidth={2.5} />
-                    </Button>
+                <div className="flex items-center justify-between py-6 md:py-8 px-6 md:px-8 border-t border-neutral-200">
+                    <div className="w-1/2 flex justify-start">
+                        {prevLink && (
+                            <Button asChild variant="outline" className="group rounded-full gap-2 text-neutral-950 font-medium shadow-none border-neutral-200 hover:bg-neutral-800 hover:text-white px-4 py-2 h-auto transition-all">
+                                <a href={prevLink}>
+                                    <IconChevronLeft size={18} strokeWidth={2.5} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" /> Previous Post
+                                </a>
+                            </Button>
+                        )}
+                    </div>
+                    
+                    <div className="w-1/2 flex justify-end">
+                        {nextLink && (
+                            <Button asChild variant="outline" className="group rounded-full gap-2 text-neutral-950 font-medium shadow-none border-neutral-200 hover:bg-neutral-800 hover:text-white px-4 py-2 h-auto transition-all">
+                                <a href={nextLink}>
+                                    Next Post <IconChevronRight size={18} strokeWidth={2.5} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                                </a>
+                            </Button>
+                        )}
+                    </div>
                 </div>
                 <div className="border-l border-neutral-200" />
             </div>
@@ -89,17 +104,17 @@ export function DetailSection({ data, relatedItems, type }: DetailProps) {
             <div className="technical-grid border-b border-neutral-200 bg-white">
                 <div className="border-r border-neutral-200" />
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 py-12 px-6 md:px-8 border-neutral-200 gap-8">
-                    <div className="space-y-4">
-                        <div className="inline-flex px-3 py-1 border border-neutral-200 rounded-full bg-white text-[10px] font-bold uppercase tracking-widest text-neutral-950">
-                            Highlight
+                <div className="grid grid-cols-1 md:grid-cols-2">
+                    <div className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
+                        <div className="inline-flex w-fit px-3 py-1 border border-neutral-200 rounded-full bg-white">
+                            <span className="text-sm font-medium text-neutral-950 tracking-tight">Highlight</span>
                         </div>
-                        <h2 className="text-3xl font-bold tracking-tighter text-neutral-950">
+                        <h2 className="text-2xl md:text-3xl font-bold tracking-tighter text-neutral-950 leading-tight">
                             Related {type === 'blog' ? 'Blogs' : 'Project'}
                         </h2>
                     </div>
-                    <div className="flex items-end">
-                        <p className="text-sm text-neutral-500 font-medium max-w-sm leading-relaxed">
+                    <div className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
+                        <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
                             Related writings that dive deeper into design decisions, workflows, and creative problem-solving. Each article expands on ideas shared throughout this project.
                         </p>
                     </div>
@@ -112,7 +127,7 @@ export function DetailSection({ data, relatedItems, type }: DetailProps) {
             <div className="technical-grid border-b border-neutral-200 bg-white">
                 <div className="border-r border-neutral-200" />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-12 px-6 md:px-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8 md:py-12 px-6 md:px-8">
                     {relatedItems.map((item, idx) => {
                         if (type === 'blog') {
                             return (

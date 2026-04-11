@@ -13,6 +13,6 @@ const label = contentType === 'blog' ? 'Artikel' : 'Proyek';
 
 <AdminLayout title={`Tambah ${label} Baru`}>
   <div class="w-full">
-    <ContentForm client:load type={contentType} mode="add" />
+    <ContentForm client:only="react" type={contentType} mode="add" />
   </div>
 </AdminLayout>

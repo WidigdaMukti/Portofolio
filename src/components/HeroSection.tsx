@@ -3,6 +3,7 @@
 import * as React from "react"
 import { IconArrowUpRight } from "@tabler/icons-react"
 import { Button } from "@/components/ui/button"
+import { portoData } from "@/lib/data-porto"
 
 export function HeroSection() {
 
@@ -13,7 +14,7 @@ export function HeroSection() {
                 <div className="border-r border-neutral-200" />
 
                 {/* AREA KONTEN TENGAH */}
-                <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] items-center gap-8 py-10 md:py-16 px-6 md:px-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-y-16 lg:gap-8 py-10 md:py-12 px-6 md:px-8">
 
                     {/* Sisi Kiri: Teks & CTA */}
                     <div className="flex flex-col items-start space-y-4">
@@ -58,17 +59,40 @@ export function HeroSection() {
                         </Button>
                     </div>
 
-                    {/* Sisi Kanan: Image Stack Placeholder */}
-                    <div className="hidden lg:flex justify-center items-center relative py-8">
-                        {/* Stack background dekoratif */}
-                        <div className="absolute w-[85%] aspect-[4/3] bg-neutral-100 rounded-xl rotate-6 translate-x-4" />
-                        <div className="absolute w-[85%] aspect-[4/3] bg-neutral-50 rounded-xl rotate-3 translate-x-2 border border-neutral-100" />
+                    {/* Sisi Kanan: Image Stack Terinteraktif (Hidden on Mobile) */}
+                    <div className="hidden lg:flex justify-center items-center relative py-8 min-h-[450px]">
+                        {portoData.slice(0, 4).map((project, i) => {
+                            const isFront = i === 0;
+                            const isSecond = i === 1;
+                            const isThird = i === 2;
+                            const isBack = i === 3;
+                            
+                            let styleClass = "";
+                            if (isFront) {
+                                styleClass = "z-40 rotate-0 translate-x-0 translate-y-0 hover:-rotate-1 hover:scale-[1.05] hover:shadow-2xl hover:z-50";
+                            } else if (isSecond) {
+                                styleClass = "z-30 rotate-[4deg] translate-x-4 -translate-y-6 hover:rotate-[8deg] hover:translate-x-8 hover:-translate-y-10 hover:scale-[1.05] hover:shadow-2xl hover:z-50";
+                            } else if (isThird) {
+                                styleClass = "z-20 -rotate-[3deg] -translate-x-3 -translate-y-12 hover:-rotate-[4deg] hover:-translate-x-12 hover:-translate-y-16 hover:scale-[1.05] hover:shadow-2xl hover:z-50";
+                            } else if (isBack) {
+                                styleClass = "z-10 rotate-[7deg] translate-x-6 -translate-y-16 hover:rotate-[10deg] hover:translate-x-14 hover:-translate-y-20 hover:scale-[1.05] hover:shadow-2xl hover:z-50";
+                            }
 
-                        {/* Frame Utama */}
-                        <div className="relative w-[85%] aspect-[4/3] bg-neutral-200 rounded-xl border border-neutral-300 shadow-sm flex items-center justify-center overflow-hidden">
-                            {/* Tempat Naruh Screenshot Design Kamu Nanti */}
-                            <div className="text-neutral-400 text-xs font-bold uppercase tracking-widest">Preview Image</div>
-                        </div>
+                            return (
+                                <a 
+                                  key={project.id}
+                                  href={`/portofolio/${project.slug}`}
+                                  className={`
+                                    absolute w-[90%] aspect-[16/9] rounded-xl shadow-xl 
+                                    overflow-hidden transition duration-500 ease-out cursor-pointer
+                                    ${styleClass}
+                                `}>
+                                    {/* Overlay Tipis Gelap di gambar belakang supaya gambar depan stand-out */}
+                                    {!isFront && <div className="absolute inset-0 bg-neutral-900/10 hover:bg-transparent transition-colors duration-500" />}
+                                    <img src={project.thumbnail} alt={project.title} className="w-full h-full object-cover" />
+                                </a>
+                            )
+                        })}
                     </div>
 
                 </div>

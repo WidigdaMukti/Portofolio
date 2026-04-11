@@ -5,6 +5,21 @@ import { IconArrowUpRight, IconMessage2 } from "@tabler/icons-react"
 import { Button } from "@/components/ui/button"
 
 export function ServicesSection() {
+  // 1. DAFTAR GAMBAR UI DESIGN
+  // Tambahkan gambar baru ke dalam array ini (jika hanya ada 1 gambar, sistem otomatis mengulanginya biar tidak bolong/kosong)
+  const sourceUiImages = ["/home/A1.png"];
+
+  // 2. DAFTAR GAMBAR PROTOTYPE (Anda bahkan bisa bedakan gambar untuk kolom 1, 2, dan 3)
+  const sourceProtoCol1 = ["/home/B1.png"];
+  const sourceProtoCol2 = ["/home/B1.png"];
+  const sourceProtoCol3 = ["/home/B1.png"];
+
+  // --- LOGIC: Memastikan jumlah item minimal ada 4 agar antrean (marquee loop) tidak putus/kosong ---
+  const uiImages = Array.from({ length: Math.max(4, sourceUiImages.length) }).map((_, i) => sourceUiImages[i % sourceUiImages.length]);
+  const protoCol1 = Array.from({ length: Math.max(4, sourceProtoCol1.length) }).map((_, i) => sourceProtoCol1[i % sourceProtoCol1.length]);
+  const protoCol2 = Array.from({ length: Math.max(4, sourceProtoCol2.length) }).map((_, i) => sourceProtoCol2[i % sourceProtoCol2.length]);
+  const protoCol3 = Array.from({ length: Math.max(4, sourceProtoCol3.length) }).map((_, i) => sourceProtoCol3[i % sourceProtoCol3.length]);
+
   const tags = [
     "SaaS Product", "Dashboard", "E-commerce", "Landing Page", 
     "Fintech", "Mobile App", "Edutech", "CRM", "Healthcare Solution",
@@ -16,8 +31,8 @@ export function ServicesSection() {
       {/* --- HEADER --- */}
       <div className="technical-grid border-b border-neutral-200">
         <div className="border-r border-neutral-200" />
-        <div className="grid grid-cols-1 md:grid-cols-2 py-8 px-6 md:px-8 items-start">
-          <div className="flex flex-col gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          <div className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
             <div className="inline-flex w-fit px-3 py-1 border border-neutral-200 rounded-full bg-white">
                 <span className="text-sm font-medium text-neutral-950 tracking-tight">Services</span>
             </div>
@@ -25,7 +40,7 @@ export function ServicesSection() {
               Design services that <br /> drive results. 🚀
             </h2>
           </div>
-          <div className="flex items-end md:pt-14">
+          <div className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
             <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
               Focused on crafting user-centered digital products that balance usability, business goals, and seamless interaction.
             </p>
@@ -43,18 +58,27 @@ export function ServicesSection() {
           {/* KOLOM KIRI: Panjang - Pendek */}
           <div className="flex flex-col gap-6">
             {/* UI Design (Long Card) */}
-            <div className="bg-neutral-100/50 p-6 md:p-8 rounded-xl border border-neutral-200 group cursor-pointer flex flex-col gap-8 min-h-[480px]">
-              <div className="space-y-3">
+            <div className="bg-neutral-100/50 pt-6 md:pt-8 rounded-xl border border-neutral-200 group cursor-pointer flex flex-col gap-8 min-h-[480px] overflow-hidden">
+              <div className="space-y-3 px-6 md:px-8">
                 <h3 className="text-xl font-semibold text-neutral-950 tracking-tight">UI Design & Visual Identity</h3>
                 <p className="text-sm text-neutral-500 leading-relaxed">
                   Designing clean, scalable interfaces and visual systems that create consistency, strengthen brand identity, and improve overall user experience.
                 </p>
               </div>
-              <div className="mt-auto relative aspect-[4/3] bg-neutral-200 rounded-xl overflow-hidden border border-neutral-300/50 transition-transform duration-500 group-hover:rotate-2 group-hover:scale-[1.02]">
-                <div className="absolute inset-0 flex items-center justify-center">
-                   <div className="w-4/5 h-4/5 bg-neutral-300 rounded-lg shadow-sm rotate-3 translate-x-2" />
-                   <div className="absolute w-4/5 h-4/5 bg-neutral-400/20 rounded-lg -rotate-3 -translate-x-2 border border-neutral-300" />
-                </div>
+              <div className="relative w-full flex-grow overflow-hidden flex items-center justify-center">
+                  <div className="flex animate-marquee gap-6 w-max px-6">
+                     {uiImages.map((src, i) => (
+                        <div key={i} className="w-[460px] h-[260px] bg-neutral-100 rounded-xl shadow-sm shrink-0 border border-neutral-200 overflow-hidden relative">
+                            <img src={src} alt={`UI Design ${i+1}`} className="w-full h-full object-cover" />
+                        </div>
+                     ))}
+                     {uiImages.map((src, i) => (
+                        <div key={`dup-${i}`} className="w-[460px] h-[260px] bg-neutral-100 rounded-xl shadow-sm shrink-0 border border-neutral-200 overflow-hidden relative">
+                            <img src={src} alt={`UI Design ${i+1}`} className="w-full h-full object-cover" />
+                        </div>
+                     ))}
+                  </div>
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-[#F5F5F5] via-transparent to-[#F5F5F5]" />
               </div>
             </div>
 
@@ -78,15 +102,60 @@ export function ServicesSection() {
             </div>
 
             {/* Interaction (Long Card) */}
-            <div className="bg-neutral-100/50 p-6 md:p-8 rounded-xl border border-neutral-200 group cursor-pointer flex flex-col gap-8 min-h-[480px]">
-              <div className="space-y-3">
+            <div className="bg-neutral-100/50 pt-6 md:pt-8 rounded-xl border border-neutral-200 group cursor-pointer flex flex-col min-h-[480px] overflow-hidden">
+              <div className="space-y-3 px-6 md:px-8 relative z-10">
                 <h3 className="text-xl font-semibold text-neutral-950 tracking-tight">Interaction & Prototyping</h3>
                 <p className="text-sm text-neutral-500 leading-relaxed">
                   Bringing ideas to life through interactive prototypes that validate concepts, improve usability, and support faster development.
                 </p>
               </div>
-              <div className="mt-auto aspect-[4/3] bg-neutral-200 rounded-xl border border-neutral-300/50 transition-transform duration-500 group-hover:-rotate-2 group-hover:scale-[1.02] flex items-center justify-center">
-                 <div className="w-1/2 h-1/2 bg-neutral-400/10 rounded-full border-2 border-dashed border-neutral-400/30 animate-pulse" />
+              <div className="mt-auto relative w-full h-[320px] overflow-hidden flex justify-center items-center">
+                  <div className="flex gap-4 transform rotate-[15deg] scale-110">
+                      
+                      {/* Column 1: Up */}
+                      <div className="flex flex-col gap-4 animate-marquee-vertical h-max">
+                         {protoCol1.map((src, i) => (
+                            <div key={i} className="w-[100px] h-[200px] bg-white rounded-xl shadow-md border-[4px] border-neutral-100 shrink-0 p-1 relative overflow-hidden">
+                                <img src={src} alt="Prototype Screen" className="w-full h-full object-cover rounded-[8px]" />
+                            </div>
+                         ))}
+                         {protoCol1.map((src, i) => (
+                            <div key={`dup-${i}`} className="w-[100px] h-[200px] bg-white rounded-xl shadow-md border-[4px] border-neutral-100 shrink-0 p-1 relative overflow-hidden">
+                                <img src={src} alt="Prototype Screen" className="w-full h-full object-cover rounded-[8px]" />
+                            </div>
+                         ))}
+                      </div>
+
+                      {/* Column 2: Down */}
+                      <div className="flex flex-col gap-4 animate-marquee-vertical-reverse h-max transform -translate-y-12">
+                         {protoCol2.map((src, i) => (
+                            <div key={i} className="w-[100px] h-[200px] bg-white rounded-xl shadow-md border-[4px] border-neutral-100 shrink-0 p-1 relative overflow-hidden">
+                                <img src={src} alt="Prototype Screen" className="w-full h-full object-cover rounded-[8px]" />
+                            </div>
+                         ))}
+                         {protoCol2.map((src, i) => (
+                            <div key={`dup-${i}`} className="w-[100px] h-[200px] bg-white rounded-xl shadow-md border-[4px] border-neutral-100 shrink-0 p-1 relative overflow-hidden">
+                                <img src={src} alt="Prototype Screen" className="w-full h-full object-cover rounded-[8px]" />
+                            </div>
+                         ))}
+                      </div>
+
+                      {/* Column 3: Up */}
+                      <div className="flex flex-col gap-4 animate-marquee-vertical h-max transform translate-y-8">
+                         {protoCol3.map((src, i) => (
+                            <div key={i} className="w-[100px] h-[200px] bg-white rounded-xl shadow-md border-[4px] border-neutral-100 shrink-0 p-1 relative overflow-hidden">
+                                <img src={src} alt="Prototype Screen" className="w-full h-full object-cover rounded-[8px]" />
+                            </div>
+                         ))}
+                         {protoCol3.map((src, i) => (
+                            <div key={`dup-${i}`} className="w-[100px] h-[200px] bg-white rounded-xl shadow-md border-[4px] border-neutral-100 shrink-0 p-1 relative overflow-hidden">
+                                <img src={src} alt="Prototype Screen" className="w-full h-full object-cover rounded-[8px]" />
+                            </div>
+                         ))}
+                      </div>
+
+                  </div>
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#F5F5F5] via-transparent to-[#F5F5F5]" />
               </div>
             </div>
           </div>
@@ -99,7 +168,7 @@ export function ServicesSection() {
       <div className="technical-grid overflow-hidden">
         <div className="border-r border-neutral-200" />
         
-        <div className="py-8 relative flex overflow-hidden border-t border-neutral-200">
+        <div className="py-6 md:py-8 relative flex overflow-hidden border-t border-neutral-200">
           <div className="animate-marquee gap-4 px-4">
             {tags.map((tag, i) => (
               <div key={i} className="px-6 py-2.5 border border-neutral-200 rounded-full text-sm font-medium text-neutral-950 bg-white whitespace-nowrap">
@@ -123,16 +192,16 @@ export function ServicesSection() {
       {/* --- FINAL CTA --- */}
       <div className="technical-grid">
         <div className="border-r border-neutral-200" />
-        <div className="flex items-center justify-center gap-3 py-8 border-t border-neutral-200">
+        <div className="flex items-center justify-center gap-3 py-6 md:py-8 border-t border-neutral-200">
           <Button asChild className="rounded-full bg-neutral-950 text-white px-4 py-2 h-auto text-sm font-medium hover:bg-neutral-800 transition-all gap-2 group shadow-none">
             <a href="/contact">
             Hire Me <IconArrowUpRight size={18} stroke={3} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
           </Button>
           <div className="w-px h-8 bg-neutral-200 mx-2" />
-          <Button asChild variant="outline" className="rounded-full border-neutral-200 px-4 py-2 h-auto text-sm font-medium text-neutral-950 hover:bg-neutral-50 gap-2 shadow-none">
+          <Button asChild variant="outline" className="group rounded-full border-neutral-200 px-4 py-2 h-auto text-sm font-medium text-neutral-950 hover:bg-neutral-800 hover:text-white gap-2 shadow-none transition-all">
             <a href="/contact">
-            Lets Talk <IconMessage2 size={18} stroke={2} />
+            Lets Talk <IconMessage2 size={18} stroke={2} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
           </Button>
         </div>

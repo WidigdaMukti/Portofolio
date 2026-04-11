@@ -27,7 +27,7 @@ if (error || !post) {
 <AdminLayout title={`Edit ${type} - ${post.title}`}>
   <div class="w-full">
     <ContentForm 
-      client:load 
+      client:only="react" 
       type={contentType} 
       mode="edit" 
       initialData={post} 

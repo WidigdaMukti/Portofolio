@@ -15,7 +15,7 @@ export function BlogList() {
             <div className="technical-grid border-b border-neutral-200">
                 <div className="border-r border-neutral-200" />
                 <div className="grid grid-cols-1 md:grid-cols-2">
-                    <div className="flex flex-col gap-4 py-8 px-6 md:px-8">
+                    <div className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
                         <div className="inline-flex w-fit px-3 py-1 border border-neutral-200 rounded-full bg-white">
                             <span className="text-sm font-medium text-neutral-950 tracking-tight">Blog & Insights</span>
                         </div>
@@ -23,7 +23,7 @@ export function BlogList() {
                             Thoughts, ideas, <br /> and deep dives. ✍️
                         </h2>
                     </div>
-                    <div className="flex items-end justify-start py-8 px-6 md:px-8">
+                    <div className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
                         <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
                             A curated space for sharing industry insights, technical processes, and thoughtful reflections on design and development.
                         </p>
@@ -36,7 +36,7 @@ export function BlogList() {
             <div className="technical-grid">
                 <div className="border-r border-neutral-200" />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-8 px-6 md:px-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-8 md:gap-y-12 py-8 md:py-12 px-6 md:px-8">
                     {visibleBlogs.map((blog) => (
                         <a
                             key={blog.id}
@@ -72,13 +72,13 @@ export function BlogList() {
             {visibleCount < blogData.length ? (
                 <div className="technical-grid border-b border-neutral-200">
                     <div className="border-r border-neutral-200" />
-                    <div className="flex items-center justify-center py-8 border-t border-neutral-200">
+                    <div className="flex items-center justify-center py-6 md:py-8 border-t border-neutral-200">
                         <Button
                             onClick={() => setVisibleCount(prev => prev + 6)}
                             variant="outline"
-                            className="rounded-full border-neutral-200 px-4 py-2 h-auto text-sm font-medium text-neutral-950 hover:bg-neutral-50 gap-2 shadow-none transition-transform active:scale-95"
+                            className="group rounded-full border-neutral-200 px-4 py-2 h-auto text-sm font-medium text-neutral-950 hover:bg-neutral-800 hover:text-white gap-2 shadow-none transition-all active:scale-95"
                         >
-                            Load More <ChevronsDown size={18} strokeWidth={2.5} />
+                            Load More <ChevronsDown size={18} strokeWidth={2.5} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                         </Button>
                     </div>
                     <div className="border-l border-neutral-200" />
