@@ -3,6 +3,7 @@ export type ContentType = 'blog' | 'portofolio';
 export interface ContentData {
   id: string;
   thumbnail: string;
+  images?: string[];
   title: string;
   slug: string;
   subtitle?: string;

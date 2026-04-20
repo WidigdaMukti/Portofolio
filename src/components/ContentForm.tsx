@@ -62,6 +62,11 @@ export function ContentForm({ type, mode, initialData }: ContentFormProps) {
     const [pendingFile, setPendingFile] = React.useState<File | null>(null)
     const fileInputRef = React.useRef<HTMLInputElement>(null)
 
+    // --- NEW GALLERY STATES ---
+    const [images, setImages] = React.useState<string[]>(initialData?.images || [])
+    const [pendingGalleryFiles, setPendingGalleryFiles] = React.useState<File[]>([])
+    const galleryInputRef = React.useRef<HTMLInputElement>(null)
+
     // --- BLOCKNOTE EDITOR ---
     const editor = useCreateBlockNote()
 
@@ -138,6 +143,21 @@ export function ContentForm({ type, mode, initialData }: ContentFormProps) {
         }
     };
 
+    const handleGallerySelection = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const filesArray = Array.from(e.target.files);
+            setPendingGalleryFiles(prev => [...prev, ...filesArray]);
+        }
+    };
+
+    const removePendingGalleryFile = (index: number) => {
+        setPendingGalleryFiles(prev => prev.filter((_, i) => i !== index));
+    };
+
+    const removeExistingImage = (index: number) => {
+        setImages(prev => prev.filter((_, i) => i !== index));
+    };
+
     const handleDeleteFromForm = async () => {
         setIsLoading(true);
         const deleteTask = async () => {
@@ -186,7 +206,26 @@ export function ContentForm({ type, mode, initialData }: ContentFormProps) {
                 const { data: { publicUrl } } = supabase.storage.from('thumbnails').getPublicUrl(fileName);
                 finalUrl = publicUrl;
             }
-            const payload = { ...(isEdit && { id: initialData?.id }), title, slug, subtitle, content, category, status, thumbnail: finalUrl, date: format(date, "yyyy-MM-dd") };
+
+            // --- GALLERY UPLOAD LOGIC ---
+            let finalImagesUrls = [...images];
+            if (pendingGalleryFiles.length > 0) {
+                for (const gFile of pendingGalleryFiles) {
+                    const gFileName = `gallery-${type}-${Date.now()}-${Math.floor(Math.random()*1000)}.${gFile.name.split('.').pop()}`;
+                    const { error: gError } = await supabase.storage.from('thumbnails').upload(gFileName, gFile);
+                    if (gError) throw gError;
+                    const { data: { publicUrl: gUrl } } = supabase.storage.from('thumbnails').getPublicUrl(gFileName);
+                    finalImagesUrls.push(gUrl);
+                }
+            }
+
+            const payload = { 
+                ...(isEdit && { id: initialData?.id }), 
+                title, slug, subtitle, content, category, status, 
+                thumbnail: finalUrl, 
+                images: finalImagesUrls,
+                date: format(date, "yyyy-MM-dd") 
+            };
             const { error } = await supabase.from(tableName).upsert(payload);
             if (error) throw error;
             return new Promise((res) => setTimeout(() => { window.location.href = `/admin/${path}`; res(true); }, 1500));
@@ -247,6 +286,35 @@ export function ContentForm({ type, mode, initialData }: ContentFormProps) {
                             </div>
                         </CardContent>
                     </Card>
+
+                    {/* --- GALLERY MULTI-UPLOAD --- */}
+                    {!isBlog && (
+                        <Card className="overflow-hidden py-0 border-none shadow-sm mt-6">
+                            <CardContent className="p-6 space-y-3">
+                                <Label className="text-sm font-semibold">Gallery Images</Label>
+                                <input type="file" ref={galleryInputRef} className="hidden" accept="image/*" multiple onChange={handleGallerySelection} />
+                                
+                                <div className="grid grid-cols-3 gap-2">
+                                    {images.map((imgUrl, i) => (
+                                        <div key={`exist-${i}`} className="relative aspect-square rounded-md overflow-hidden group">
+                                            <img src={imgUrl} className="w-full h-full object-cover" />
+                                            <button type="button" onClick={(e) => { e.stopPropagation(); removeExistingImage(i); }} className="absolute top-1 right-1 bg-black/60 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"><IconTrash size={14}/></button>
+                                        </div>
+                                    ))}
+                                    {pendingGalleryFiles.map((file, i) => (
+                                        <div key={`pending-${i}`} className="relative aspect-square rounded-md overflow-hidden group border-2 border-primary">
+                                            <img src={URL.createObjectURL(file)} className="w-full h-full object-cover opacity-90" />
+                                            <button type="button" onClick={(e) => { e.stopPropagation(); removePendingGalleryFile(i); }} className="absolute top-1 right-1 bg-black/60 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"><IconTrash size={14}/></button>
+                                        </div>
+                                    ))}
+                                    <div onClick={() => galleryInputRef.current?.click()} className="aspect-square rounded-md border-2 border-dashed border-input flex flex-col items-center justify-center hover:bg-muted cursor-pointer transition-colors">
+                                        <IconPlus className="h-5 w-5 text-muted-foreground mb-1" />
+                                        <span className="text-[10px] text-muted-foreground font-medium">Tambah</span>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
 
                     {/* --- INTEGRASI CATEGORY DINAMIS (STRUKTUR ASLI) --- */}
                     <Card className="py-0 border-none shadow-sm">

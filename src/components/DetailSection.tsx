@@ -4,6 +4,7 @@ import * as React from "react"
 import { IconChevronLeft, IconChevronRight, IconArrowUpRight, IconArrowRight, IconHeart, IconHeartFilled, IconShare3 } from "@tabler/icons-react"
 import { Button } from "@/components/ui/button"
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn"
+import { ImageCarousel } from "@/components/ImageCarousel"
 import { supabase } from "@/lib/supabase"
 
 interface DetailProps {
@@ -113,9 +114,13 @@ export function DetailSection({ data, relatedItems, type, prevLink, nextLink }: 
             <div className="technical-grid">
                 <div className="border-r border-neutral-200" />
                 <FadeIn delay={0.2} direction="up" className="px-6 md:px-8 mt-8">
-                    <div className="aspect-[16/9] w-full bg-neutral-100 rounded-2xl border border-neutral-200 overflow-hidden shadow-sm">
-                        <img src={data.thumbnail} className="w-full h-full object-cover" alt="Featured" />
-                    </div>
+                    {data.images && data.images.length > 0 ? (
+                        <ImageCarousel images={[data.thumbnail, ...data.images]} />
+                    ) : (
+                        <div className="aspect-[16/9] w-full bg-neutral-100 rounded-2xl border border-neutral-200 overflow-hidden shadow-sm">
+                            <img src={data.thumbnail} className="w-full h-full object-cover" alt="Featured" />
+                        </div>
+                    )}
                 </FadeIn>
                 <div className="border-l border-neutral-200" />
             </div>
