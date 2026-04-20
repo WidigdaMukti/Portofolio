@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { ChevronsUpDown, ChevronsDownUp } from "lucide-react"
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn"
 
 const EXPERIENCES = [
     {
@@ -64,19 +65,19 @@ export function ExperienceSection() {
             <div className="technical-grid border-b border-neutral-200">
                 <div className="border-r border-neutral-200" />
                 <div className="grid grid-cols-1 md:grid-cols-2">
-                    <div className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
+                    <FadeIn delay={0.1} direction="up" className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
                         <div className="inline-flex w-fit px-3 py-1 border border-neutral-200 rounded-full bg-white">
                             <span className="text-sm font-medium text-neutral-950 tracking-tight">Experiences</span>
                         </div>
                         <h2 className="text-2xl md:text-3xl font-bold tracking-tighter text-neutral-950 leading-tight">
                             Experience that <br /> matters. 🚀
                         </h2>
-                    </div>
-                    <div className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
+                    </FadeIn>
+                    <FadeIn delay={0.2} direction="up" className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
                         <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
                             Shaping meaningful solutions that improve usability, streamline workflows, and deliver real value to users and businesses.
                         </p>
-                    </div>
+                    </FadeIn>
                 </div>
                 <div className="border-l border-neutral-200" />
             </div>
@@ -91,6 +92,7 @@ export function ExperienceSection() {
                         <div className="border-r border-neutral-200" />
 
                         <div className={`flex flex-col w-full bg-white ${!isLast ? 'border-b border-neutral-200' : ''}`}>
+                            <FadeIn delay={0.1 * index} direction="up" className="flex flex-col w-full">
                             {/* TRIGGER AREA */}
                             <button 
                                 onClick={() => toggleAccordion(exp.id)}
@@ -149,6 +151,7 @@ export function ExperienceSection() {
                                     </div>
                                 </div>
                             </div>
+                            </FadeIn>
                         </div>
 
                         <div className="border-l border-neutral-200" />

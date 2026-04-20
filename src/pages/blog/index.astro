@@ -2,7 +2,17 @@
 import "@/styles/global.css";
 import MainLayout from '../../layouts/MainLayout.astro';
 import { BlogList } from '../../components/BlogList';
+import { supabase } from "@/lib/supabase";
+
+// Fetch all published blogs, ordered by newest first
+const { data: blogs } = await supabase
+    .from('blogs')
+    .select('*')
+    .eq('status', 'Published')
+    .order('created_at', { ascending: false });
+
+const blogsData = blogs || [];
 ---
 <MainLayout title="Blog">
-  <BlogList client:load />
+  <BlogList blogs={blogsData} client:load />
 </MainLayout>

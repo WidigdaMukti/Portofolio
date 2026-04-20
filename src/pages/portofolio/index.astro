@@ -2,7 +2,17 @@
 import "@/styles/global.css";
 import MainLayout from '../../layouts/MainLayout.astro';
 import { PortfolioList } from '../../components/PortfolioList';
+import { supabase } from "@/lib/supabase";
+
+// Fetch all published portfolios, ordered by newest first
+const { data: portofolios } = await supabase
+    .from('portofolios')
+    .select('*')
+    .eq('status', 'Published')
+    .order('created_at', { ascending: false });
+
+const projectsData = portofolios || [];
 ---
 <MainLayout title="Portofolio">
-  <PortfolioList client:load />
+  <PortfolioList projects={projectsData} client:load />
 </MainLayout>

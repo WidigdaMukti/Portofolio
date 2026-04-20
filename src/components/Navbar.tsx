@@ -137,14 +137,8 @@ export function Navbar() {
                     </Sheet>
                 </div>
 
-                {/* KANAN: Tetap (Lang + CTA) */}
+                {/* KANAN: CTA (Let's Talk) */}
                 <div className="flex items-center gap-4 md:gap-4">
-                    <div className="flex items-center gap-1 md:gap-2 text-neutral-500 hover:text-neutral-950 cursor-pointer transition-colors group">
-                        <IconWorld size={20} stroke={1.5} className="md:block hidden" />
-                        <span className="text-sm font-medium uppercase tracking-wider">En</span>
-                        <IconChevronDown size={14} className="group-hover:translate-y-0.5 transition-transform" />
-                    </div>
-                    <div className="h-6 w-px bg-neutral-200" />
                     <Button
                         asChild
                         variant="outline"
@@ -152,7 +146,7 @@ export function Navbar() {
                     >
                         <a href="/contact">
                             <span className="flex items-center justify-center gap-2 animate-text-shimmer">
-                                Lets Talk <IconMessage2 size={18} stroke={1.5} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform hidden md:block" />
+                                Lets Talk <IconMessage2 size={18} stroke={1.5} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                             </span>
                         </a>
                     </Button>

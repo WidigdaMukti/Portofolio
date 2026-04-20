@@ -3,6 +3,7 @@
 import * as React from "react"
 import { IconArrowUpRight, IconMessage2 } from "@tabler/icons-react"
 import { Button } from "@/components/ui/button"
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn"
 
 export function ServicesSection() {
   // 1. DAFTAR GAMBAR UI DESIGN
@@ -32,19 +33,19 @@ export function ServicesSection() {
       <div className="technical-grid border-b border-neutral-200">
         <div className="border-r border-neutral-200" />
         <div className="grid grid-cols-1 md:grid-cols-2">
-          <div className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
+          <FadeIn delay={0.1} direction="up" className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
             <div className="inline-flex w-fit px-3 py-1 border border-neutral-200 rounded-full bg-white">
                 <span className="text-sm font-medium text-neutral-950 tracking-tight">Services</span>
             </div>
             <h2 className="text-2xl md:text-3xl font-bold tracking-tighter text-neutral-950 leading-tight">
               Design services that <br /> drive results. 🚀
             </h2>
-          </div>
-          <div className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
+          </FadeIn>
+          <FadeIn delay={0.2} direction="up" className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
             <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
               Focused on crafting user-centered digital products that balance usability, business goals, and seamless interaction.
             </p>
-          </div>
+          </FadeIn>
         </div>
         <div className="border-l border-neutral-200" />
       </div>
@@ -53,10 +54,11 @@ export function ServicesSection() {
       <div className="technical-grid">
         <div className="border-r border-neutral-200" />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-8 px-6 md:px-8 bg-white">
+        <StaggerContainer delayChildren={0.1} staggerChildren={0.1} className="grid grid-cols-1 md:grid-cols-2 gap-6 py-8 px-6 md:px-8 bg-white">
           
           {/* KOLOM KIRI: Panjang - Pendek */}
           <div className="flex flex-col gap-6">
+            <StaggerItem>
             {/* UI Design (Long Card) */}
             <div className="bg-neutral-100/50 pt-6 md:pt-8 rounded-xl border border-neutral-200 group cursor-pointer flex flex-col gap-8 min-h-[480px] overflow-hidden">
               <div className="space-y-3 px-6 md:px-8">
@@ -81,7 +83,9 @@ export function ServicesSection() {
                   <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-[#F5F5F5] via-transparent to-[#F5F5F5]" />
               </div>
             </div>
+            </StaggerItem>
 
+            <StaggerItem>
             {/* User Research (Short Card) */}
             <div className="bg-white p-6 md:p-8 rounded-xl border border-neutral-200 group cursor-pointer hover:bg-neutral-50 transition-colors">
               <h3 className="text-xl font-semibold text-neutral-950 tracking-tight mb-3">User Research & Strategy</h3>
@@ -89,10 +93,12 @@ export function ServicesSection() {
                 Understanding user behavior and business needs to define clear strategies that guide product decisions and reduce guesswork.
               </p>
             </div>
+            </StaggerItem>
           </div>
 
           {/* KOLOM KANAN: Pendek - Panjang */}
           <div className="flex flex-col gap-6">
+            <StaggerItem>
             {/* UX Design (Short Card) */}
             <div className="bg-white p-6 md:p-8 rounded-xl border border-neutral-200 group cursor-pointer hover:bg-neutral-50 transition-colors">
               <h3 className="text-xl font-semibold text-neutral-950 tracking-tight mb-3">UX Design & Wireframing</h3>
@@ -100,7 +106,9 @@ export function ServicesSection() {
                 Structuring user flows and wireframes that simplify complex systems into intuitive and efficient experiences.
               </p>
             </div>
+            </StaggerItem>
 
+            <StaggerItem>
             {/* Interaction (Long Card) */}
             <div className="bg-neutral-100/50 pt-6 md:pt-8 rounded-xl border border-neutral-200 group cursor-pointer flex flex-col min-h-[480px] overflow-hidden">
               <div className="space-y-3 px-6 md:px-8 relative z-10">
@@ -158,8 +166,9 @@ export function ServicesSection() {
                   <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#F5F5F5] via-transparent to-[#F5F5F5]" />
               </div>
             </div>
+            </StaggerItem>
           </div>
-        </div>
+        </StaggerContainer>
 
         <div className="border-l border-neutral-200" />
       </div>

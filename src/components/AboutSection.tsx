@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn"
 
 export function AboutSection() {
     return (
@@ -14,21 +15,21 @@ export function AboutSection() {
                 {/* Konten Header */}
                 <div className="grid grid-cols-1 md:grid-cols-2">
                     {/* Kolom Kiri: Badge & Title */}
-                    <div className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
+                    <FadeIn delay={0.1} direction="up" className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
                         <div className="inline-flex w-fit px-3 py-1 border border-neutral-200 rounded-full bg-white">
                             <span className="text-sm font-medium text-neutral-950 tracking-tight">About me</span>
                         </div>
                         <h2 className="text-2xl md:text-3xl font-bold tracking-tighter text-neutral-950 leading-tight">
                             Design that connects <br /> ideas and people. 🎯
                         </h2>
-                    </div>
+                    </FadeIn>
 
                     {/* Kolom Kanan: Deskripsi (Align Bottom-Left) */}
-                    <div className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
+                    <FadeIn delay={0.2} direction="up" className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
                         <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
                             Creating meaningful digital experiences where technology, aesthetics, and human needs come together seamlessly.
                         </p>
-                    </div>
+                    </FadeIn>
                 </div>
 
                 {/* Gutter Kanan */}
@@ -42,7 +43,7 @@ export function AboutSection() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8 px-6 md:px-8">
 
                     {/* KOLOM KIRI: Foto (Fill) + Name & Socials */}
-                    <div className="flex flex-col gap-6 h-full">
+                    <FadeIn delay={0.1} direction="up" className="flex flex-col gap-6 h-full">
                         {/* Foto: h-full & flex-1 biar narik ngikutin tinggi teks di kanan */}
                         <div className="flex-1 min-h-[300px] bg-neutral-200 rounded-xl border border-neutral-200 shadow-inner relative overflow-hidden">
                             <img src="/home/mukti.webp" alt="Widigda Mukti" className="object-cover w-full h-full" />
@@ -70,23 +71,31 @@ export function AboutSection() {
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </FadeIn>
 
                     {/* KOLOM KANAN: Teks Cerita */}
-                    <div className="flex flex-col gap-4 text-sm text-neutral-800 leading-relaxed md:text-base">
-                        <p>
-                            Design and technology have always been closely connected in my journey. With a background in Informatics Engineering, I developed a strong foundation in problem-solving and system thinking, while also nurturing my interest in visual design and creativity.
-                        </p>
-                        <p>
-                            What started as a curiosity for building and designing systems evolved into a deeper focus on UI/UX. I see design not only as how something looks, but how it works, feels, and connects with users in a meaningful way.
-                        </p>
-                        <p>
-                            My approach centers on creating balanced experiences, where aesthetics meet functionality. I enjoy translating complex ideas into simple, intuitive interfaces that align with both user needs and technical feasibility.
-                        </p>
-                        <p>
-                            For me, great design is about harmony between humans and technology. It’s about crafting solutions that are not only visually pleasing, but also purposeful, efficient, and able to create real impact.
-                        </p>
-                    </div>
+                    <StaggerContainer delayChildren={0.2} staggerChildren={0.1} className="flex flex-col gap-4 text-sm text-neutral-800 leading-relaxed md:text-base">
+                        <StaggerItem>
+                            <p>
+                                Design and technology have always been closely connected in my journey. With a background in Informatics Engineering, I developed a strong foundation in problem-solving and system thinking, while also nurturing my interest in visual design and creativity.
+                            </p>
+                        </StaggerItem>
+                        <StaggerItem>
+                            <p>
+                                What started as a curiosity for building and designing systems evolved into a deeper focus on UI/UX. I see design not only as how something looks, but how it works, feels, and connects with users in a meaningful way.
+                            </p>
+                        </StaggerItem>
+                        <StaggerItem>
+                            <p>
+                                My approach centers on creating balanced experiences, where aesthetics meet functionality. I enjoy translating complex ideas into simple, intuitive interfaces that align with both user needs and technical feasibility.
+                            </p>
+                        </StaggerItem>
+                        <StaggerItem>
+                            <p>
+                                For me, great design is about harmony between humans and technology. It’s about crafting solutions that are not only visually pleasing, but also purposeful, efficient, and able to create real impact.
+                            </p>
+                        </StaggerItem>
+                    </StaggerContainer>
 
                 </div>
 

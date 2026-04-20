@@ -1,32 +1,79 @@
 "use client"
 
 import * as React from "react"
-import { Send } from "lucide-react"
+import { Send, Loader2 } from "lucide-react"
+import { IconCheck } from "@tabler/icons-react"
+import { FadeIn } from "@/components/ui/FadeIn"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { supabase } from "@/lib/supabase"
 
 export function ContactSection() {
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [isSuccess, setIsSuccess] = React.useState(false)
+  
+  const [formData, setFormData] = React.useState({
+    name: "",
+    email: "",
+    phone: "",
+    category: "",
+    message: ""
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!formData.name || !formData.email || !formData.message) return
+
+    setIsLoading(true)
+    
+    const { error } = await supabase.from("inbox").insert([{
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      category: formData.category,
+      message: formData.message,
+      status: 'new'
+    }])
+
+    setIsLoading(false)
+
+    if (!error) {
+      setIsSuccess(true)
+      // Reset after 3 seconds
+      setTimeout(() => {
+        setIsSuccess(false)
+        setFormData({ name: "", email: "", phone: "", category: "", message: "" })
+      }, 3000)
+    } else {
+      alert("Gagal mengirim pesan: " + error.message)
+    }
+  }
+
   return (
     <section className="w-full">
       {/* --- 1. HEADER SECTION (Same as About) --- */}
       <div className="technical-grid border-b border-neutral-200">
         <div className="border-r border-neutral-200" />
         <div className="grid grid-cols-1 md:grid-cols-2">
-          <div className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
+          <FadeIn delay={0.1} direction="up" className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
             <div className="inline-flex w-fit px-3 py-1 border border-neutral-200 rounded-full bg-white">
               <span className="text-sm font-medium text-neutral-950 tracking-tight">Get in touch</span>
             </div>
             <h2 className="text-2xl md:text-3xl font-bold tracking-tighter text-neutral-950 leading-tight">
               Let’s Turn Ideas <br /> Into Impact. 🚀
             </h2>
-          </div>
-          <div className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
+          </FadeIn>
+          <FadeIn delay={0.2} direction="up" className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
             <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
               Built for meaningful collaboration and impactful outcomes. Share project goals, ideas, or challenges to start shaping better digital experiences.
             </p>
-          </div>
+          </FadeIn>
         </div>
         <div className="border-l border-neutral-200" />
       </div>
@@ -37,7 +84,7 @@ export function ContactSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8 md:py-10 px-6 md:px-8">
           
           {/* KOLOM KIRI: Foto & Metadata (Same as About) */}
-          <div className="flex flex-col gap-6 h-full">
+          <FadeIn delay={0.1} direction="up" className="flex flex-col gap-6 h-full">
             <div className="flex-1 min-h-[300px] bg-neutral-200 rounded-xl border border-neutral-200 shadow-inner relative overflow-hidden">
               <img src="/home/mukti.webp" alt="Widigda Mukti" className="object-cover w-full h-full" />
             </div>
@@ -58,18 +105,23 @@ export function ContactSection() {
                 </a>
               </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* KOLOM KANAN: Form (Customized per Screenshot) */}
-          <div className="p-6 md:p-8 rounded-xl border border-neutral-200 bg-white flex flex-col gap-6">
-            <div className="grid grid-cols-1 gap-5">
+          <FadeIn delay={0.2} direction="up" className="h-full">
+          <form onSubmit={handleSubmit} className="p-6 md:p-8 rounded-xl border border-neutral-200 bg-white flex flex-col gap-6 h-full">
+            <div className="flex flex-col flex-1 gap-5">
               
               {/* Full Name */}
               <div className="space-y-2">
                 <Label className="text-sm font-medium text-neutral-950">Full Name</Label>
                 <Input 
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
                   placeholder="Your full name" 
-                  className="px-4 py-2 h-auto rounded-lg border-neutral-200 bg-white focus-visible:ring-neutral-400 shadow-none text-neutral-700 text-sm md:text-base placeholder:text-neutral-400" 
+                  className="px-4 py-2 h-auto rounded-lg border-neutral-200 bg-white focus-visible:ring-neutral-400 shadow-none text-neutral-700 text-sm placeholder:text-neutral-400" 
                 />
               </div>
 
@@ -78,16 +130,23 @@ export function ContactSection() {
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-neutral-950">Email Address</Label>
                   <Input 
-                    type="email" 
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
                     placeholder="your@email.com" 
-                    className="px-4 py-2 h-auto rounded-lg border-neutral-200 bg-white focus-visible:ring-neutral-400 shadow-none text-neutral-700 text-sm md:text-base placeholder:text-neutral-400" 
+                    className="px-4 py-2 h-auto rounded-lg border-neutral-200 bg-white focus-visible:ring-neutral-400 shadow-none text-neutral-700 text-sm placeholder:text-neutral-400" 
                   />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-neutral-950">Phone Number</Label>
                   <Input 
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
                     placeholder="+62 xxx xxxx xxxx" 
-                    className="px-4 py-2 h-auto rounded-lg border-neutral-200 bg-white focus-visible:ring-neutral-400 shadow-none text-neutral-700 text-sm md:text-base placeholder:text-neutral-400" 
+                    className="px-4 py-2 h-auto rounded-lg border-neutral-200 bg-white focus-visible:ring-neutral-400 shadow-none text-neutral-700 text-sm placeholder:text-neutral-400" 
                   />
                 </div>
               </div>
@@ -96,27 +155,51 @@ export function ContactSection() {
               <div className="space-y-2">
                 <Label className="text-sm font-medium text-neutral-950">Project Category</Label>
                 <Input 
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
                   placeholder="e.g. Website Design, Mobile App, Branding" 
-                  className="px-4 py-2 h-auto rounded-lg border-neutral-200 bg-white focus-visible:ring-neutral-400 shadow-none text-neutral-700 text-sm md:text-base placeholder:text-neutral-400" 
+                  className="px-4 py-2 h-auto rounded-lg border-neutral-200 bg-white focus-visible:ring-neutral-400 shadow-none text-neutral-700 text-sm placeholder:text-neutral-400" 
                 />
               </div>
 
               {/* Message */}
-              <div className="space-y-2">
+              <div className="flex-1 flex flex-col space-y-2">
                 <Label className="text-sm font-medium text-neutral-950">Your Message</Label>
                 <Textarea 
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  className="flex-1 rounded-lg border-neutral-200 bg-white px-4 py-2 h-auto min-h-[120px] focus-visible:ring-neutral-400 shadow-none resize-none text-neutral-700 text-sm placeholder:text-neutral-400"
                   placeholder="Tell me about your project or inquiry..." 
-                  className="rounded-lg border-neutral-200 bg-white px-4 py-2 h-auto min-h-[120px] focus-visible:ring-neutral-400 shadow-none resize-none text-neutral-700 text-sm md:text-base placeholder:text-neutral-400" 
                 />
               </div>
             </div>
 
             {/* Button: Same Height and Radius as Inputs */}
-            <Button className="group w-full px-4 py-2 h-auto rounded-lg bg-neutral-950 text-white font-medium text-sm hover:bg-neutral-800 transition-all flex items-center justify-center gap-2 shadow-none">
-              Send Message
-              <Send size={18} strokeWidth={2.5} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <Button 
+                type="submit" 
+                disabled={isLoading || isSuccess}
+                className={`group w-full px-4 py-2 h-auto rounded-lg font-medium text-sm flex items-center justify-center gap-2 shadow-none transition-all duration-300 ${isSuccess ? 'bg-green-500 hover:bg-green-600 text-white' : 'bg-neutral-950 hover:bg-neutral-800 text-white'}`}
+            >
+              {isLoading ? (
+                  <>
+                      <Loader2 size={18} className="animate-spin" /> Mengirim...
+                  </>
+              ) : isSuccess ? (
+                  <>
+                      Pesan Terkirim! <IconCheck size={18} className="scale-110" />
+                  </>
+              ) : (
+                  <>
+                      Send Message
+                      <Send size={18} strokeWidth={2.5} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </>
+              )}
             </Button>
-          </div>
+          </form>
+          </FadeIn>
         </div>
         <div className="border-l border-neutral-200" />
       </div>

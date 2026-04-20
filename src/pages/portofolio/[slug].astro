@@ -2,34 +2,56 @@
 import "@/styles/global.css";
 import MainLayout from '../../layouts/MainLayout.astro';
 import { DetailSection } from '../../components/DetailSection';
-import { portoData } from '../../lib/data-porto';
+import { supabase } from '../../lib/supabase';
 
-export const prerender = true;
-
-export async function getStaticPaths() {
-    return portoData.map((porto) => ({
-        params: { slug: porto.slug },
-        props: { porto },
-    }));
-}
+export const prerender = false;
 
 const { slug } = Astro.params;
-const currentIndex = portoData.findIndex(p => p.slug === slug);
-const porto = Astro.props.porto || portoData[currentIndex];
 
-if (!porto) {
+// 1. Fetch current portfolio
+const { data: portoData } = await supabase
+    .from('portofolios')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+if (!portoData) {
     return Astro.redirect('/404');
 }
 
-const relatedProjects = portoData.filter((p) => p.slug !== porto.slug).slice(0, 2);
-const prevLink = currentIndex > 0 ? `/portofolio/${portoData[currentIndex - 1].slug}` : undefined;
-const nextLink = currentIndex >= 0 && currentIndex < portoData.length - 1 ? `/portofolio/${portoData[currentIndex + 1].slug}` : undefined;
+// 2. Fetch related projects (same category, different slug)
+const { data: relatedProjects } = await supabase
+    .from('portofolios')
+    .select('*')
+    .eq('status', 'Published')
+    .neq('slug', slug)
+    .limit(2);
+
+// 3. Fetch all published for prev/next logic
+const { data: allPortos } = await supabase
+    .from('portofolios')
+    .select('slug')
+    .eq('status', 'Published')
+    .order('created_at', { ascending: false });
+
+const currentIndex = allPortos?.findIndex(p => p.slug === slug) ?? -1;
+const prevLink = currentIndex > 0 ? `/portofolio/${allPortos![currentIndex - 1].slug}` : undefined;
+const nextLink = currentIndex >= 0 && currentIndex < (allPortos?.length ?? 0) - 1 ? `/portofolio/${allPortos![currentIndex + 1].slug}` : undefined;
+// 4. Generate SEO Description from Content
+const stripHtml = (html: string) => html.replace(/<[^>]*>?/gm, '');
+const seoDescription = portoData.content ? stripHtml(portoData.content).substring(0, 160) + "..." : undefined;
 ---
 
-<MainLayout title={porto.title} postId={porto.id}>
+<MainLayout 
+    title={portoData.title} 
+    postId={portoData.id}
+    description={seoDescription}
+    image={portoData.thumbnail}
+    type="article"
+>
     <DetailSection 
-        data={porto} 
-        relatedItems={relatedProjects} 
+        data={portoData} 
+        relatedItems={relatedProjects || []} 
         type="portofolio"
         prevLink={prevLink}
         nextLink={nextLink}

@@ -6,13 +6,24 @@ import { PortoSection } from "@/components/PortoSection";
 import { ServicesSection } from "@/components/ServiceSection";
 import { AboutSection } from "@/components/AboutSection";
 import { ExperienceSection } from "@/components/ExperienceSection";
+import { supabase } from "@/lib/supabase";
+
+// Fetch up to 4 portfolios from Supabase
+const { data: portofolios } = await supabase
+    .from('portofolios')
+    .select('*')
+    .eq('status', 'Published')
+    .order('created_at', { ascending: false })
+    .limit(4);
+
+const projectsData = portofolios || [];
 ---
 
 <MainLayout title="Home">
     {/* Konten spesifik halaman Home */}
-    <HeroSection />
-    <PortoSection />
-    <ServicesSection />
-    <AboutSection />
+    <HeroSection client:load projects={projectsData} />
+    <PortoSection client:load projects={projectsData} />
+    <ServicesSection client:load />
+    <AboutSection client:load />
     <ExperienceSection client:load />
 </MainLayout>

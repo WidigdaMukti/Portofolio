@@ -3,34 +3,56 @@
 import "@/styles/global.css";
 import MainLayout from '../../layouts/MainLayout.astro';
 import { DetailSection } from '../../components/DetailSection';
-import { blogData } from '../../lib/data-blog';
+import { supabase } from '../../lib/supabase';
 
-export const prerender = true;
-
-export async function getStaticPaths() {
-    return blogData.map((blog) => ({
-        params: { slug: blog.slug },
-        props: { blog },
-    }));
-}
+export const prerender = false;
 
 const { slug } = Astro.params;
-const currentIndex = blogData.findIndex(b => b.slug === slug);
-const blog = Astro.props.blog || blogData[currentIndex];
 
-if (!blog) {
+// 1. Fetch current blog
+const { data: blogData } = await supabase
+    .from('blogs')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+if (!blogData) {
     return Astro.redirect('/404');
 }
 
-const relatedBlogs = blogData.filter((b) => b.slug !== blog.slug).slice(0, 2);
-const prevLink = currentIndex > 0 ? `/blog/${blogData[currentIndex - 1].slug}` : undefined;
-const nextLink = currentIndex >= 0 && currentIndex < blogData.length - 1 ? `/blog/${blogData[currentIndex + 1].slug}` : undefined;
+// 2. Fetch related blogs
+const { data: relatedBlogs } = await supabase
+    .from('blogs')
+    .select('*')
+    .eq('status', 'Published')
+    .neq('slug', slug)
+    .limit(2);
+
+// 3. Fetch all published for prev/next logic
+const { data: allBlogs } = await supabase
+    .from('blogs')
+    .select('slug')
+    .eq('status', 'Published')
+    .order('created_at', { ascending: false });
+
+const currentIndex = allBlogs?.findIndex(b => b.slug === slug) ?? -1;
+const prevLink = currentIndex > 0 ? `/blog/${allBlogs![currentIndex - 1].slug}` : undefined;
+const nextLink = currentIndex >= 0 && currentIndex < (allBlogs?.length ?? 0) - 1 ? `/blog/${allBlogs![currentIndex + 1].slug}` : undefined;
+// 4. Generate SEO Description from Content
+const stripHtml = (html: string) => html.replace(/<[^>]*>?/gm, '');
+const seoDescription = blogData.content ? stripHtml(blogData.content).substring(0, 160) + "..." : undefined;
 ---
 
-<MainLayout title={blog.title} postId={blog.id}>
+<MainLayout 
+    title={blogData.title} 
+    postId={blogData.id}
+    description={seoDescription}
+    image={blogData.thumbnail}
+    type="article"
+>
     <DetailSection 
-        data={blog} 
-        relatedItems={relatedBlogs} 
+        data={blogData} 
+        relatedItems={relatedBlogs || []} 
         type="blog" 
         prevLink={prevLink}
         nextLink={nextLink}

@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { supabase } from "@/lib/supabase"
 import {
   Avatar,
   AvatarFallback,
@@ -45,15 +46,19 @@ export function NavUser({
   const { isMobile } = useSidebar()
   const [showLogoutDialog, setShowLogoutDialog] = React.useState(false)
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     console.log("Proses Logout...");
 
-    // 1. HAPUS COOKIE (Wajib pake path=/ supaya sinkron)
+    // 1. CLEAR SUPABASE SESSION & LOCAL STORAGE
+    await supabase.auth.signOut();
+
+    // 2. HAPUS COOKIE (Akses dan Refresh)
     document.cookie = "sb-access-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax";
+    document.cookie = "sb-refresh-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax";
 
-    console.log("Cookie dihapus!");
+    console.log("Sesi Backend & Cookie dihapus!");
 
-    // 2. Beri jeda dikit biar browser kelar hapus, lalu lempar ke login
+    // 3. Beri jeda dikit biar browser kelar hapus, lalu lempar ke login
     setTimeout(() => {
       window.location.replace("/login");
     }, 200);

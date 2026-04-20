@@ -4,11 +4,11 @@ import * as React from "react"
 import { ChevronsDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { IconArrowRight } from "@tabler/icons-react";
-import { portoData } from "@/lib/data-porto";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn"
 
-export function PortfolioList() {
+export function PortfolioList({ projects = [] }: { projects?: any[] }) {
     const [visibleCount, setVisibleCount] = React.useState(6);
-    const visiblePortos = portoData.slice(0, visibleCount);
+    const visiblePortos = projects.slice(0, visibleCount);
 
     return (
         <section className="w-full">
@@ -16,19 +16,19 @@ export function PortfolioList() {
             <div className="technical-grid border-b border-neutral-200">
                 <div className="border-r border-neutral-200" />
                 <div className="grid grid-cols-1 md:grid-cols-2">
-                    <div className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
+                    <FadeIn delay={0.1} direction="up" className="flex flex-col gap-4 pt-8 pb-0 md:py-8 px-6 md:px-8">
                         <div className="inline-flex w-fit px-3 py-1 border border-neutral-200 rounded-full bg-white">
                             <span className="text-sm font-medium text-neutral-950 tracking-tight">Portfolio</span>
                         </div>
                         <h2 className="text-2xl md:text-3xl font-bold tracking-tighter text-neutral-950 leading-tight">
                             Portfolio highlights <br /> collection. ⚡
                         </h2>
-                    </div>
-                    <div className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
+                    </FadeIn>
+                    <FadeIn delay={0.2} direction="up" className="flex items-end justify-start pb-8 pt-4 md:py-8 px-6 md:px-8">
                         <p className="text-sm md:text-base text-neutral-500 leading-relaxed">
                             A collection of projects that showcase how thoughtful design solves real problems, improves user experience, and delivers meaningful results.
                         </p>
-                    </div>
+                    </FadeIn>
                 </div>
                 <div className="border-l border-neutral-200" />
             </div>
@@ -36,8 +36,9 @@ export function PortfolioList() {
             {/* --- GRID ITEMS --- */}
             <div className="technical-grid">
                 <div className="border-r border-neutral-200" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-8 md:gap-y-12 py-8 md:py-12 px-6 md:px-8">
+                <StaggerContainer delayChildren={0.1} staggerChildren={0.1} className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-8 md:gap-y-12 py-8 md:py-12 px-6 md:px-8">
                     {visiblePortos.map((porto) => (
+                        <StaggerItem key={porto.id}>
                         <a 
                             key={porto.id} 
                             href={`/portofolio/${porto.slug}`} 
@@ -61,16 +62,18 @@ export function PortfolioList() {
                                 </div>
                             </div>
                         </a>
+                        </StaggerItem>
                     ))}
-                </div>
+                </StaggerContainer>
                 <div className="border-l border-neutral-200" />
             </div>
 
             {/* --- LOAD MORE --- */}
-            {visibleCount < portoData.length && (
+            {/* --- LOAD MORE --- */}
+            {visibleCount < projects.length ? (
                 <div className="technical-grid border-b border-neutral-200">
                     <div className="border-r border-neutral-200" />
-                    <div className="flex items-center justify-center py-6 md:py-8 border-t border-neutral-200">
+                    <FadeIn delay={0.1} direction="up" className="flex items-center justify-center py-6 md:py-8 border-t border-neutral-200">
                         <Button 
                             onClick={() => setVisibleCount(prev => prev + 6)}
                             variant="outline" 
@@ -78,9 +81,11 @@ export function PortfolioList() {
                         >
                             Load More <ChevronsDown size={18} strokeWidth={2.5} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                         </Button>
-                    </div>
+                    </FadeIn>
                     <div className="border-l border-neutral-200" />
                 </div>
+            ) : (
+                <div className="technical-grid border-b border-neutral-200" />
             )}
         </section>
     );

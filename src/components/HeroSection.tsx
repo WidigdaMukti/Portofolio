@@ -3,9 +3,9 @@
 import * as React from "react"
 import { IconArrowUpRight } from "@tabler/icons-react"
 import { Button } from "@/components/ui/button"
-import { portoData } from "@/lib/data-porto"
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/FadeIn"
 
-export function HeroSection() {
+export function HeroSection({ projects = [] }: { projects?: any[] }) {
 
     return (
         <section className="w-full border-b border-neutral-200">
@@ -17,7 +17,7 @@ export function HeroSection() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-y-16 lg:gap-8 py-10 md:py-12 px-6 md:px-8">
 
                     {/* Sisi Kiri: Teks & CTA */}
-                    <div className="flex flex-col items-start space-y-4">
+                    <FadeIn delay={0.1} direction="up" className="flex flex-col items-start space-y-4">
                         {/* Badge Label */}
                         <div className="inline-flex w-fit px-3 py-1 border border-neutral-200 rounded-full bg-white">
                             <span className="text-sm font-medium text-neutral-950 tracking-tight">
@@ -40,7 +40,15 @@ export function HeroSection() {
                             </span>{" "}
                             Better <br />
                             Digital Experiences <br />
-                            for <span className="text-neutral-400">Real Impact.</span>
+                            for {" "}
+                            <span className="relative inline-block border-2 border-sky-500 px-1.5 py-0 mx-1 text-neutral-500 font-bold cursor-default">
+                                {/* Figma Selection Anchors */}
+                                <span className="absolute -top-[5px] -left-[5px] w-[9px] h-[9px] bg-white border-2 border-sky-500 rounded-[1px]" />
+                                <span className="absolute -top-[5px] -right-[5px] w-[9px] h-[9px] bg-white border-2 border-sky-500 rounded-[1px]" />
+                                <span className="absolute -bottom-[5px] -left-[5px] w-[9px] h-[9px] bg-white border-2 border-sky-500 rounded-[1px]" />
+                                <span className="absolute -bottom-[5px] -right-[5px] w-[9px] h-[9px] bg-white border-2 border-sky-500 rounded-[1px]" />
+                                Real Impact.
+                            </span>
                         </h1>
 
                         {/* Description */}
@@ -57,11 +65,11 @@ export function HeroSection() {
                                 <IconArrowUpRight size={22} stroke={2.5} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                             </a>
                         </Button>
-                    </div>
+                    </FadeIn>
 
                     {/* Sisi Kanan: Image Stack Terinteraktif (Hidden on Mobile) */}
-                    <div className="hidden lg:flex justify-center items-center relative py-8 min-h-[450px]">
-                        {portoData.slice(0, 4).map((project, i) => {
+                    <FadeIn delay={0.2} direction="left" className="hidden lg:flex justify-center items-center relative py-8 min-h-[450px]">
+                        {projects.slice(0, 4).map((project, i) => {
                             const isFront = i === 0;
                             const isSecond = i === 1;
                             const isThird = i === 2;
@@ -93,7 +101,7 @@ export function HeroSection() {
                                 </a>
                             )
                         })}
-                    </div>
+                    </FadeIn>
 
                 </div>
 
